@@ -1,3 +1,25 @@
+# AI Agency Sample
+
+## Development
+
+## AI Chatbot (added)
+
+This project includes a simple AI chatbot integration.
+
+- **API route:** `app/api/chat/route.ts` proxies requests to OpenAI's Chat Completions endpoint.
+- **Chat UI component:** `components/Chatbot.tsx` is a small client component for messaging.
+- **Page:** Visit `/chat` in dev to use the chatbot.
+
+To enable the feature:
+
+1. Copy `.env.local.example` to `.env.local` and set `OPENAI_API_KEY`.
+2. Start the dev server (`npm run dev`).
+3. Open `http://localhost:3000/chat` and send a message.
+
+Notes:
+
+- The server-side route expects `messages` in the same shape used by OpenAI: an array of objects `{ role, content }`.
+- You can replace the model in `app/api/chat/route.ts` if you have other preferences.
 <!--
   AI Automation Agency Website Template
   ------------------------------------
@@ -110,10 +132,12 @@ This template is a fully responsive, theme-supported, and beautifully animated f
 This template is **commercially licensed**. You are permitted to use it in personal or commercial projects, including client work. **Redistribution, resale, or public sharing is strictly prohibited.**
 
 **Valid License:**
+
 - Purchase required via Gumroad, store.lusansapkota.com.np, or direct from Lusan Sapkota
 - See `LICENSE.txt` for full terms
 
 **Support & Inquiries:**
+
 - Email: contact@lusansapkota.com.np or sapkotalusan@gmail.com
 
 ---
