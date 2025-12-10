@@ -1,17 +1,16 @@
+// components/Chatbot.tsx
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
 
-type Message = { role: "user" | "assistant" | "system"; content: string };
+export type Message = { role: "user" | "assistant" | "system"; content: string };
 
-export default function Chatbot() {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: "assistant",
-      content:
-        "Hi! I’m your AI automation assistant. Ask anything about our services, workflows, tools, or how we can help your business run smarter.",
-    },
-  ]);
+type ChatbotProps = {
+  messages: Message[];
+  setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
+};
+
+export default function Chatbot({ messages, setMessages }: ChatbotProps) {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -49,7 +48,6 @@ export default function Chatbot() {
           data?.error ||
           `The AI service returned an error (status ${res.status}).`;
 
-        // Optional: nicer message for quota errors
         if (
           typeof errorText === "string" &&
           errorText.toLowerCase().includes("quota exceeded")
@@ -138,6 +136,7 @@ export default function Chatbot() {
     </div>
   );
 }
+
 
 // // components/Chatbot.tsx
 // "use client";

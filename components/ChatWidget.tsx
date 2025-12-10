@@ -2,10 +2,18 @@
 "use client";
 
 import { useState } from "react";
-import Chatbot from "./Chatbot";
+import Chatbot, { Message } from "./Chatbot";
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
+
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      role: "assistant",
+      content:
+        "Hi! I’m your AI automation assistant. Ask anything about our services, workflows, tools, or how we can help your business run smarter.",
+    },
+  ]);
 
   function toggleWidget() {
     setIsOpen((prev) => !prev);
@@ -38,7 +46,7 @@ export default function ChatWidget() {
 
           {/* Chat area */}
           <div className="flex-1 min-h-0 p-3 bg-slate-50 overflow-y-auto overscroll-contain touch-pan-y scrollbar-thin">
-            <Chatbot />
+            <Chatbot messages={messages} setMessages={setMessages} />
           </div>
         </div>
       )}
@@ -46,8 +54,8 @@ export default function ChatWidget() {
       {/* Floating toggle button bottom-right */}
       <button
         onClick={toggleWidget}
-        className="fixed bottom-1 right-4 z-50 flex items-center gap-2 rounded-full shadow-xl bg-blue-600 text-white px-4 py-3 hover:bg-blue-700 transition-transform transform hover:-translate-y-0.5"
-        aria-label={isOpen ? "Close AI assistant" : "Open AI assistant"} 
+        className="fixed bottom-1 right-4 z-50 flex items-center gap-2 rounded-full shadow-xl bg-[#0E427E] text-white px-4 py-3 hover:bg-[#1F6DCC] transition-transform transform hover:-translate-y-0.5"
+        aria-label={isOpen ? "Close AI assistant" : "Open AI assistant"}
       >
         <span className="text-xl">🤖</span>
         <span className="hidden sm:inline text-sm font-medium">
