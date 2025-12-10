@@ -242,24 +242,30 @@ export default function Home() {
       {/* Trusted By Section */}
       <AnimatedSection className="py-32 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-slate-800 dark:to-slate-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Section Title */}
           <AnimatedSection className="text-center mb-20" delay={0.2}>
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              Trusted by Forward-Thinking Companies
+              Trusted by Businesses Accelerating with AI
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Join leading businesses that have transformed their operations
-              with our AI automation solutions.
+              Companies across industries rely on our AI integration and
+              automation solutions to streamline operations, reduce manual
+              workloads, and scale faster with intelligent systems.
             </p>
           </AnimatedSection>
 
+          {/* Client Logos */}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
             {[
-              { name: "TechCorp", logo: "ri-building-line" },
-              { name: "InnovateLabs", logo: "ri-flask-line" },
-              { name: "DataFlow", logo: "ri-database-line" },
-              { name: "CloudSync", logo: "ri-cloud-line" },
-              { name: "SmartOps", logo: "ri-settings-line" },
-              { name: "FutureAI", logo: "ri-robot-line" },
+              { name: "AutomatePro", logo: "ri-settings-5-line" },
+              { name: "EnterpriseSync", logo: "ri-share-line" },
+              {
+                name: "AIWorks Global",
+                logo: "ri-artificial-intelligence-line",
+              },
+              { name: "DataBridge Systems", logo: "ri-exchange-funds-line" },
+              { name: "OpsPilot Cloud", logo: "ri-cloud-line" },
+              { name: "FlowAutomate", logo: "ri-robot-line" },
             ].map((client, index) => (
               <AnimatedSection
                 key={index}
