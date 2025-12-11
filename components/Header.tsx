@@ -94,7 +94,7 @@ export default function Header() {
                 dark:text-accent-600
                 transition-colors duration-200"
             >
-              AI Solutions
+              MFG AI Integration and System Automation
             </span>
           </Link>
 
