@@ -239,42 +239,67 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Trusted By Section */}
+      {/* Trusted By / What We Deliver Section */}
       <AnimatedSection className="py-32 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-slate-800 dark:to-slate-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Title */}
           <AnimatedSection className="text-center mb-20" delay={0.2}>
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              Trusted by Businesses Accelerating with AI
+              Trusted by Teams Building with AI & Automation
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Companies across industries rely on our AI integration and
-              automation solutions to streamline operations, reduce manual
-              workloads, and scale faster with intelligent systems.
+              From{" "}
+              <span className="font-semibold">public website chatbots</span> to{" "}
+              <span className="font-semibold">protected assistants</span> for
+              customer portals, plus{" "}
+              <span className="font-semibold">ERP & custom business apps</span>,
+              we help organizations modernize operations with secure AI, clean
+              integrations, and admin-controlled workflows.
             </p>
           </AnimatedSection>
 
-          {/* Client Logos */}
+          {/* Capability Tiles (more credible than fake logos) */}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
             {[
-              { name: "AutomatePro", logo: "ri-settings-5-line" },
-              { name: "EnterpriseSync", logo: "ri-share-line" },
               {
-                name: "AIWorks Global",
-                logo: "ri-artificial-intelligence-line",
+                name: "Public Website Chatbots",
+                logo: "ri-message-3-line",
+                desc: "Lead capture + FAQs 24/7",
               },
-              { name: "DataBridge Systems", logo: "ri-exchange-funds-line" },
-              { name: "OpsPilot Cloud", logo: "ri-cloud-line" },
-              { name: "FlowAutomate", logo: "ri-robot-line" },
-            ].map((client, index) => (
+              {
+                name: "Protected Chatbots",
+                logo: "ri-shield-check-line",
+                desc: "Authenticated user access",
+              },
+              {
+                name: "Admin KB Management",
+                logo: "ri-admin-line",
+                desc: "Consistent updates & control",
+              },
+              {
+                name: "ERP & Business Web Apps",
+                logo: "ri-building-2-line",
+                desc: "Back-office + reporting",
+              },
+              {
+                name: "E-commerce & Inventory",
+                logo: "ri-store-2-line",
+                desc: "Orders + stock management",
+              },
+              {
+                name: "System Integration & Automation",
+                logo: "ri-git-merge-line",
+                desc: "APIs, webhooks, n8n/Make/Zapier",
+              },
+            ].map((item, index) => (
               <AnimatedSection
-                key={index}
+                key={item.name}
                 delay={index * 0.1}
                 direction="scale"
                 className="group cursor-pointer"
               >
                 <motion.div
-                  className="bg-white dark:bg-slate-900 rounded-xl p-8 shadow-md hover:shadow-xl transition-all duration-300 text-center"
+                  className="bg-white dark:bg-slate-900 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 text-center h-full"
                   whileHover={{
                     scale: 1.05,
                     y: -10,
@@ -284,16 +309,31 @@ export default function Home() {
                 >
                   <div className="w-16 h-16 bg-gray-100 dark:bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-500 transition-colors duration-300">
                     <i
-                      className={`${client.logo} text-gray-600 dark:text-gray-300 group-hover:text-white text-2xl`}
+                      className={`${item.logo} text-gray-600 dark:text-gray-300 group-hover:text-white text-2xl`}
                     ></i>
                   </div>
-                  <p className="text-sm font-medium text-gray-900 dark:text-white">
-                    {client.name}
+
+                  <p className="text-sm font-semibold text-gray-900 dark:text-white">
+                    {item.name}
+                  </p>
+                  <p className="mt-2 text-xs text-gray-600 dark:text-gray-300 leading-snug">
+                    {item.desc}
                   </p>
                 </motion.div>
               </AnimatedSection>
             ))}
           </div>
+
+          {/* Optional micro-proof row */}
+          <AnimatedSection className="mt-12 text-center" delay={0.4}>
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              Typical outcomes:{" "}
+              <span className="font-medium">less manual work</span>,{" "}
+              <span className="font-medium">faster support</span>,{" "}
+              <span className="font-medium">cleaner data flow</span>,{" "}
+              <span className="font-medium">admin-controlled operations</span>.
+            </p>
+          </AnimatedSection>
         </div>
       </AnimatedSection>
 
