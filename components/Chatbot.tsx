@@ -2,7 +2,6 @@
 
 import React, { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { useChat } from "@ai-sdk/react";
-import type { Message as AIMessage } from "ai";
 
 import {
   PromptInputSelect,
@@ -23,7 +22,6 @@ import {
   ConversationContent,
   ConversationScrollButton,
 } from "@/components/ai-elements/conversation";
-import { Loader } from "@/components/ai-elements/loader";
 
 import {
   loadChatHistory,
@@ -33,7 +31,7 @@ import {
 
 import { LANGUAGES, type ChatLanguage } from "@/lib/languages";
 
-/** UI strings exactly like your old version */
+/** UI strings (same idea as your old version) */
 const UI: Record<
   ChatLanguage,
   { placeholder: string; thinking: string; clear: string }
@@ -60,59 +58,81 @@ const UI: Record<
   },
 };
 
-const WELCOME: AIMessage = {
+/** Minimal message type for local persistence + welcome message */
+type LocalMessage = {
+  id: string;
+  role: "user" | "assistant" | "system";
+  content: string;
+};
+
+const WELCOME: LocalMessage = {
   id: "welcome",
   role: "assistant",
   content:
     "Hi! I’m your AI automation assistant for MFG Automation. Ask anything about AI integration, automation, workflows, or system integrations.",
 };
 
-export default function RAGChatBot() {
+export default function Chatbot() {
   /** ----------------------------
-   * State (like your old component)
+   * State
    * ---------------------------- */
   const [lang, setLang] = useState<ChatLanguage>("en");
   const [input, setInput] = useState("");
 
-  const [initialMessages] = useState<AIMessage[]>(() => {
-    const saved = loadChatHistory();
+  /** load history once */
+  const [initialMessages] = useState<any[]>(() => {
+    const saved = (loadChatHistory() ?? []) as any[];
+    // saved could be UIMessage parts OR simple {content}
     return saved.length ? saved : [WELCOME];
   });
 
+  /** AI SDK chat */
   const { messages, sendMessage, status, setMessages } = useChat({
-    api: "/api/chat",
-    initialMessages,
-  });
+    // some versions type this option differently; runtime supports it
+    api: "/api/chat" as any,
+    initialMessages: initialMessages as any,
+  } as any);
 
   const loading = useMemo(
     () => status === "submitted" || status === "streaming",
     [status]
   );
 
-  /** ----------------------------
-   * Persist history (unchanged)
-   * ---------------------------- */
+  /** persist chat history */
   useEffect(() => {
-    saveChatHistory(messages as unknown as AIMessage[]);
+    saveChatHistory(messages as any);
   }, [messages]);
 
-  /** ----------------------------
-   * Scroll (like your old version)
-   * ---------------------------- */
+  /** scrolling (like your old version) */
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const lastLenRef = useRef(0);
 
   useEffect(() => {
-    // scroll when message count changes OR when loading starts/stops
-    if (messages.length !== lastLenRef.current) {
+    if ((messages?.length ?? 0) !== lastLenRef.current) {
       lastLenRef.current = messages.length;
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }
-  }, [messages.length]);
+  }, [messages?.length]);
 
   useEffect(() => {
     if (loading) messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [loading]);
+
+  /** ----------------------------
+   * Helpers
+   * ---------------------------- */
+
+  // Supports both message styles:
+  // - { content: string }
+  // - { parts: [{ type: "text", text: string }, ...] }
+  function renderMessageText(m: any) {
+    if (m?.parts && Array.isArray(m.parts)) {
+      return m.parts.map((p: any, i: number) =>
+        p?.type === "text" ? <Fragment key={i}>{p.text}</Fragment> : null
+      );
+    }
+    return m?.content ?? "";
+  }
 
   /** ----------------------------
    * Actions
@@ -127,10 +147,12 @@ export default function RAGChatBot() {
     if (!trimmed || loading) return;
 
     setInput("");
+
+    // AI SDK expects { text } and we attach metadata.language for your /api/chat
     sendMessage({
       text: trimmed,
-      metadata: { language: lang }, // keep your metadata for RAG/lang routing
-    });
+      metadata: { language: lang },
+    } as any);
   };
 
   const onKeyDown: React.KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
@@ -140,32 +162,19 @@ export default function RAGChatBot() {
     }
   };
 
-  /** Helper: render text for both {content} and {parts[]} messages */
-  const renderMessageText = (m: any) => {
-    if ("parts" in m && Array.isArray(m.parts)) {
-      return m.parts.map((p: any, i: number) =>
-        p.type === "text" ? <Fragment key={i}>{p.text}</Fragment> : null
-      );
-    }
-    return m.content;
-  };
-
   /** ----------------------------
-   * UI (structured like old version)
+   * UI
    * ---------------------------- */
   return (
     <div className="flex flex-col h-full text-sm text-gray-900">
       {/* messages container */}
       <div className="flex-1 min-h-0 overflow-y-auto space-y-3 bg-gray-50 p-3 rounded-lg">
-        {/* Use your existing message components (keeps streaming formatting consistent) */}
         <Conversation className="h-full">
           <ConversationContent>
-            {messages.map((m) => (
+            {(messages as any[]).map((m) => (
               <Message key={m.id} from={m.role as any}>
                 <MessageContent>
-                  <MessageResponse>
-                    {renderMessageText(m as any)}
-                  </MessageResponse>
+                  <MessageResponse>{renderMessageText(m)}</MessageResponse>
                 </MessageContent>
               </Message>
             ))}
@@ -178,28 +187,25 @@ export default function RAGChatBot() {
               </div>
             )}
 
-            {/* If you prefer the original Loader, uncomment and remove the pulse block above */}
-            {/* {loading && <Loader />} */}
-
             <div ref={messagesEndRef} />
           </ConversationContent>
+
           <ConversationScrollButton />
         </Conversation>
       </div>
 
       {/* controls (language + clear) */}
-      <div className="mt-3 ml-2  space-y-2">
+      <div className="mt-3 space-y-2">
         <div className="flex items-center justify-between">
           <button
             type="button"
             onClick={onClear}
-            className="text-xs text-gray-500 bg-blue-50 rounded hover:text-gray-900"
+            className="text-xs text-gray-500 hover:text-gray-900"
             disabled={loading}
           >
             {UI[lang].clear}
           </button>
 
-          {/* keep your PromptInputSelect, but matches old layout */}
           <PromptInputSelect
             value={lang}
             onValueChange={(v) => setLang(v as ChatLanguage)}
@@ -219,8 +225,7 @@ export default function RAGChatBot() {
           </PromptInputSelect>
         </div>
 
-        {/* input row (like old: input + send button) */}
-        {/* prompt */}
+        {/* input row */}
         <div className="mt-2 border-t border-gray-200 bg-white px-3 py-2">
           <div className="flex items-center gap-2">
             <textarea
@@ -231,28 +236,26 @@ export default function RAGChatBot() {
               placeholder={UI[lang].placeholder}
               rows={1}
               className="
-        flex-1
-        resize-none
-        rounded-lg
-        border border-gray-300
-        px-3 py-2
-        text-sm
-        text-gray-900
-        outline-none
-        focus:ring-2 focus:ring-blue-500
-        max-h-[96px]
-        overflow-y-auto
-      "
-              style={{
-                lineHeight: "1.4",
-              }}
+                flex-1
+                resize-none
+                rounded-lg
+                border border-gray-300
+                px-3 py-2
+                text-sm
+                text-gray-900
+                outline-none
+                focus:ring-2 focus:ring-blue-500
+                max-h-[96px]
+                overflow-y-auto
+              "
+              style={{ lineHeight: "1.4" }}
             />
 
             <PromptInputSubmit
-              status={status}
+              status={status as any}
               disabled={loading || !input.trim()}
               className="shrink-0 self-center"
-              onClick={(e) => {
+              onClick={(e: any) => {
                 e.preventDefault();
                 onSend();
               }}
