@@ -63,7 +63,7 @@ const WELCOME: SafeMessage = {
   id: "welcome",
   role: "assistant",
   content:
-    "Hi! I’m your AI automation assistant for MFG Automation. Ask anything about AI integration, automation, workflows, or system integrations.",
+    "Hi! I’m your AI automation assistant for KindFlow Automation. Ask anything about AI integration, automation, workflows, or system integrations.",
 };
 
 /** Extracts readable text from either `content` or `parts[]` messages */

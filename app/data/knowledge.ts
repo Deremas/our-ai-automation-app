@@ -50,14 +50,14 @@ export type BusinessKB = {
 export const BUSINESS_KB: BusinessKB = {
   meta: {
     version: "1.1.0",
-    docId: "mfg_kb_v1",
+    docId: "kindflow_kb_v1",
     supportedLanguages: ["en", "fr", "de", "lb"],
     defaultLanguage: "en",
     lastUpdated: "2025-12-15",
   },
 
   company: {
-    name: "MFG Automation",
+    name: "KindFlow Automation",
     oneLiner: {
       en: "We help businesses integrate AI and automate workflows across their tools and systems.",
       fr: "Nous aidons les entreprises à intégrer l’IA et à automatiser leurs workflows à travers leurs outils et systèmes.",
@@ -487,7 +487,7 @@ export const BUSINESS_KB: BusinessKB = {
   },
 
   contact: {
-    email: "hello@aiautomation.com",
+    email: "kindflow@automation.com",
     formUrl: "/contact",
     note: {
       en: "Preferred: share details via our contact form or email so we can follow up with specifics.",
@@ -496,10 +496,10 @@ export const BUSINESS_KB: BusinessKB = {
       lb: "Am léifsten: d’Detailer iwwer eise Contact-Formulaire oder per E-Mail schécken, fir datt mir konkret kënne follow-up maachen.",
     },
     cta: {
-      en: "Share your goal, tools, and your name/email/company so we can propose a simple plan. You can also use the contact form at /contact or email hello@aiautomation.com for more detail.",
-      fr: "Partagez votre objectif, vos outils et votre nom/email/entreprise afin que nous proposions un plan simple. Vous pouvez aussi utiliser /contact ou écrire à hello@aiautomation.com.",
-      de: "Teilen Sie Ihr Ziel, Ihre Tools sowie Ihren Namen/E-Mail/Firma, damit wir einen einfachen Plan vorschlagen können. Nutzen Sie /contact oder schreiben Sie an hello@aiautomation.com.",
-      lb: "Deelt äert Zil, är Tools an ären Numm/E-Mail/Firma, da proposéiere mir e simple Plang. Dir kënnt och /contact benotzen oder un hello@aiautomation.com schreiwen.",
+      en: "Share your goal, tools, and your name/email/company so we can propose a simple plan. You can also use the contact form at /contact or email kindflow@automation.com for more detail.",
+      fr: "Partagez votre objectif, vos outils et votre nom/email/entreprise afin que nous proposions un plan simple. Vous pouvez aussi utiliser /contact ou écrire à kindflow@automation.com.",
+      de: "Teilen Sie Ihr Ziel, Ihre Tools sowie Ihren Namen/E-Mail/Firma, damit wir einen einfachen Plan vorschlagen können. Nutzen Sie /contact oder schreiben Sie an kindflow@automation.com.",
+      lb: "Deelt äert Zil, är Tools an ären Numm/E-Mail/Firma, da proposéiere mir e simple Plang. Dir kënnt och /contact benotzen oder un kindflow@automation.com schreiwen.",
     },
   },
 
@@ -1004,7 +1004,7 @@ export const BUSINESS_KB: BusinessKB = {
 //   },
 
 //   contact: {
-//     email: "hello@aiautomation.com",
+//     email: "kindflow@automation.com",
 //     formUrl: "/contact",
 //     note: {
 //       en: "Preferred: share details via our contact form or email so we can follow up with specifics.",
@@ -1013,10 +1013,10 @@ export const BUSINESS_KB: BusinessKB = {
 //       lb: "Am léifsten: d’Detailer iwwer eise Contact-Formulaire oder per E-Mail schécken, fir datt mir konkret kënne follow-up maachen.",
 //     },
 //     cta: {
-//       en: "Share your goal, tools, and your name/email/company so we can propose a simple plan. You can also use the contact form at /contact or email hello@aiautomation.com for more detail.",
-//       fr: "Partagez votre objectif, vos outils et votre nom/email/entreprise afin que nous proposions un plan simple. Vous pouvez aussi utiliser /contact ou écrire à hello@aiautomation.com.",
-//       de: "Teilen Sie Ihr Ziel, Ihre Tools sowie Ihren Namen/E-Mail/Firma, damit wir einen einfachen Plan vorschlagen können. Nutzen Sie /contact oder schreiben Sie an hello@aiautomation.com.",
-//       lb: "Deelt äert Zil, är Tools an ären Numm/E-Mail/Firma, da proposéiere mir e simple Plang. Dir kënnt och /contact benotzen oder un hello@aiautomation.com schreiwen.",
+//       en: "Share your goal, tools, and your name/email/company so we can propose a simple plan. You can also use the contact form at /contact or email kindflow@automation.com for more detail.",
+//       fr: "Partagez votre objectif, vos outils et votre nom/email/entreprise afin que nous proposions un plan simple. Vous pouvez aussi utiliser /contact ou écrire à kindflow@automation.com.",
+//       de: "Teilen Sie Ihr Ziel, Ihre Tools sowie Ihren Namen/E-Mail/Firma, damit wir einen einfachen Plan vorschlagen können. Nutzen Sie /contact oder schreiben Sie an kindflow@automation.com.",
+//       lb: "Deelt äert Zil, är Tools an ären Numm/E-Mail/Firma, da proposéiere mir e simple Plang. Dir kënnt och /contact benotzen oder un kindflow@automation.com schreiwen.",
 //     },
 //   },
 

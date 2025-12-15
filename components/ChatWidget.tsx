@@ -17,7 +17,9 @@ export default function ChatWidget() {
                 🤖
               </span>
               <div className="leading-tight">
-                <div className="font-semibold text-sm">MFG AI Assistant</div>
+                <div className="font-semibold text-sm">
+                  KindFlow AI Assistant
+                </div>
                 <div className="text-xs text-blue-100">
                   AI integration • automation • workflows
                 </div>
