@@ -5,7 +5,7 @@ const nextConfig = {
   // output: "export",
 
   // serverExternalPackages: ["pdf-parse"],
-
+  outputFileTracing: false,
   images: {
     unoptimized: true,
   },
