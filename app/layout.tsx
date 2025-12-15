@@ -1,14 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import LenisProvider from "@/components/LenisProvider";
 import ScrollToTop from "@/components/ScrollToTop";
 import ChatWidget from "@/components/ChatWidget";
-
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "AI Automation Agency - Automate Your Business with AI",
@@ -18,17 +12,25 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning={true}>
+    <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Favicon accent color SVG */}
+        {/* Favicon */}
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
       </head>
+
       <body
-        className={`${inter.className} antialiased bg-white dark:bg-slate-900 text-gray-900 gap-2 dark:text-gray-100 transition-colors duration-300`}
+        className="
+          antialiased
+          bg-white
+          dark:bg-slate-900
+          text-gray-900
+          dark:text-gray-100
+          transition-colors
+          duration-300
+          font-sans
+        "
       >
         <LenisProvider>
           {children}
@@ -39,3 +41,45 @@ export default function RootLayout({
     </html>
   );
 }
+
+// import type { Metadata } from "next";
+// import { Inter } from "next/font/google";
+// import "./globals.css";
+// import LenisProvider from "@/components/LenisProvider";
+// import ScrollToTop from "@/components/ScrollToTop";
+// import ChatWidget from "@/components/ChatWidget";
+
+// const inter = Inter({
+//   subsets: ["latin"],
+//   display: "swap",
+// });
+
+// export const metadata: Metadata = {
+//   title: "AI Automation Agency - Automate Your Business with AI",
+//   description:
+//     "Boost efficiency, reduce costs, and scale smarter through AI automation solutions.",
+// };
+
+// export default function RootLayout({
+//   children,
+// }: Readonly<{
+//   children: React.ReactNode;
+// }>) {
+//   return (
+//     <html lang="en" suppressHydrationWarning={true}>
+//       <head>
+//         {/* Favicon accent color SVG */}
+//         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+//       </head>
+//       <body
+//         className={`${inter.className} antialiased bg-white dark:bg-slate-900 text-gray-900 gap-2 dark:text-gray-100 transition-colors duration-300`}
+//       >
+//         <LenisProvider>
+//           {children}
+//           <ChatWidget />
+//           <ScrollToTop />
+//         </LenisProvider>
+//       </body>
+//     </html>
+//   );
+// }
