@@ -27,11 +27,12 @@ import {
   loadChatHistory,
   saveChatHistory,
   clearChatHistory,
+  type SafeMessage,
 } from "@/lib/chat-storage";
 
 import { LANGUAGES, type ChatLanguage } from "@/lib/languages";
 
-/** UI strings (same idea as your old version) */
+/** UI strings */
 const UI: Record<
   ChatLanguage,
   { placeholder: string; thinking: string; clear: string }
@@ -58,37 +59,57 @@ const UI: Record<
   },
 };
 
-/** Minimal message type for local persistence + welcome message */
-type LocalMessage = {
-  id: string;
-  role: "user" | "assistant" | "system";
-  content: string;
-};
-
-const WELCOME: LocalMessage = {
+const WELCOME: SafeMessage = {
   id: "welcome",
   role: "assistant",
   content:
     "Hi! I’m your AI automation assistant for MFG Automation. Ask anything about AI integration, automation, workflows, or system integrations.",
 };
 
+/** Extracts readable text from either `content` or `parts[]` messages */
+function extractText(m: any): string {
+  if (typeof m?.content === "string") return m.content;
+
+  if (Array.isArray(m?.parts)) {
+    return m.parts
+      .filter((p: any) => p?.type === "text" && typeof p?.text === "string")
+      .map((p: any) => p.text)
+      .join("");
+  }
+
+  return "";
+}
+
+/** Convert any AI-SDK message shape into SafeMessage for persistence */
+function toSafe(m: any): SafeMessage {
+  const role = (m?.role ?? "assistant") as SafeMessage["role"];
+  const content = extractText(m);
+
+  return {
+    id: String(m?.id ?? (globalThis.crypto?.randomUUID?.() ?? Date.now().toString())),
+    role,
+    content,
+    metadata: m?.metadata?.language ? { language: m.metadata.language } : undefined,
+  };
+}
+
 export default function Chatbot() {
-  /** ----------------------------
-   * State
-   * ---------------------------- */
+  /** state */
   const [lang, setLang] = useState<ChatLanguage>("en");
   const [input, setInput] = useState("");
 
-  /** load history once */
-  const [initialMessages] = useState<any[]>(() => {
-    const saved = (loadChatHistory() ?? []) as any[];
-    // saved could be UIMessage parts OR simple {content}
+  /** load safe history once */
+  const [initialMessages] = useState<SafeMessage[]>(() => {
+    const saved = loadChatHistory();
     return saved.length ? saved : [WELCOME];
   });
 
-  /** AI SDK chat */
+  /**
+   * AI SDK chat
+   * - We pass SafeMessage[] as initialMessages (works; it's serializable)
+   * - Some SDK versions have strict typing; runtime supports it.
+   */
   const { messages, sendMessage, status, setMessages } = useChat({
-    // some versions type this option differently; runtime supports it
     api: "/api/chat" as any,
     initialMessages: initialMessages as any,
   } as any);
@@ -98,12 +119,23 @@ export default function Chatbot() {
     [status]
   );
 
-  /** persist chat history */
+  /** persist safe history whenever messages change */
   useEffect(() => {
-    saveChatHistory(messages as any);
+    // Convert SDK messages -> safe messages before saving
+    const safe = (messages as any[]).map(toSafe).filter((m) => m.content.length > 0);
+    saveChatHistory(safe as any);
   }, [messages]);
 
-  /** scrolling (like your old version) */
+  /** optionally sync language selector from last user message metadata */
+  useEffect(() => {
+    const last = (messages as any[])?.slice().reverse().find((m) => m?.role === "user");
+    const lastLang = last?.metadata?.language;
+    if (lastLang && (lastLang === "en" || lastLang === "fr" || lastLang === "de" || lastLang === "lb")) {
+      setLang(lastLang);
+    }
+  }, [messages]);
+
+  /** scrolling */
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const lastLenRef = useRef(0);
 
@@ -118,25 +150,7 @@ export default function Chatbot() {
     if (loading) messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [loading]);
 
-  /** ----------------------------
-   * Helpers
-   * ---------------------------- */
-
-  // Supports both message styles:
-  // - { content: string }
-  // - { parts: [{ type: "text", text: string }, ...] }
-  function renderMessageText(m: any) {
-    if (m?.parts && Array.isArray(m.parts)) {
-      return m.parts.map((p: any, i: number) =>
-        p?.type === "text" ? <Fragment key={i}>{p.text}</Fragment> : null
-      );
-    }
-    return m?.content ?? "";
-  }
-
-  /** ----------------------------
-   * Actions
-   * ---------------------------- */
+  /** actions */
   const onClear = () => {
     clearChatHistory();
     setMessages([WELCOME] as any);
@@ -148,7 +162,6 @@ export default function Chatbot() {
 
     setInput("");
 
-    // AI SDK expects { text } and we attach metadata.language for your /api/chat
     sendMessage({
       text: trimmed,
       metadata: { language: lang },
@@ -162,9 +175,18 @@ export default function Chatbot() {
     }
   };
 
-  /** ----------------------------
-   * UI
-   * ---------------------------- */
+  /** render helper */
+  const renderMessageText = (m: any) => {
+    // Prefer parts text if present
+    if (m?.parts && Array.isArray(m.parts)) {
+      return m.parts.map((p: any, i: number) =>
+        p?.type === "text" ? <Fragment key={i}>{p.text}</Fragment> : null
+      );
+    }
+    return m?.content ?? "";
+  };
+
+  /** UI */
   return (
     <div className="flex flex-col h-full text-sm text-gray-900">
       {/* messages container */}
@@ -195,7 +217,7 @@ export default function Chatbot() {
       </div>
 
       {/* controls (language + clear) */}
-      <div className="mt-3 space-y-2">
+      <div className="mt-3 space-y-2 ml-2">
         <div className="flex items-center justify-between">
           <button
             type="button"
