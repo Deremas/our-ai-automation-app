@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -11,30 +11,39 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <Link href="/" className="flex items-center space-x-2 mb-4 group">
-              <span
-                className="flex items-center justify-center h-10 w-10 rounded-lg border-2 border-primary-500 bg-primary-100 dark:bg-slate-800 dark:border-accent-500 font-bold text-primary-600 dark:text-accent-400 text-lg transition-all duration-200 group-hover:bg-primary-200 group-hover:dark:bg-slate-700"
-              >
+              <span className="flex items-center justify-center h-10 w-10 rounded-lg border-2 border-primary-500 bg-primary-100 dark:bg-slate-800 dark:border-accent-500 font-bold text-primary-600 dark:text-accent-400 text-lg transition-all duration-200 group-hover:bg-primary-200 group-hover:dark:bg-slate-700">
                 AI
               </span>
               <span className="text-xl font-bold text-accent-500 transition-colors duration-200">
-              AI Solutions
+                KindFlow Automation
               </span>
             </Link>
             <p className="text-blue-200 mb-4 max-w-md">
-              Transforming businesses through intelligent automation. We help companies implement AI solutions to boost efficiency, reduce costs, and scale smarter.
+              Transforming businesses through intelligent automation. We help
+              companies implement AI solutions to boost efficiency, reduce
+              costs, and scale smarter.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-blue-200 hover:text-accent-500 transition-colors duration-200">
+              <a
+                href="#"
+                className="text-blue-200 hover:text-accent-500 transition-colors duration-200"
+              >
                 <div className="w-6 h-6 flex items-center justify-center">
                   <i className="ri-linkedin-fill"></i>
                 </div>
               </a>
-              <a href="#" className="text-blue-200 hover:text-accent-500 transition-colors duration-200">
+              <a
+                href="#"
+                className="text-blue-200 hover:text-accent-500 transition-colors duration-200"
+              >
                 <div className="w-6 h-6 flex items-center justify-center">
                   <i className="ri-twitter-fill"></i>
                 </div>
               </a>
-              <a href="#" className="text-blue-200 hover:text-accent-500 transition-colors duration-200">
+              <a
+                href="#"
+                className="text-blue-200 hover:text-accent-500 transition-colors duration-200"
+              >
                 <div className="w-6 h-6 flex items-center justify-center">
                   <i className="ri-facebook-fill"></i>
                 </div>
@@ -45,10 +54,38 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              <li><Link href="/about" className="text-blue-200 hover:text-accent-500 transition-colors duration-200">About Us</Link></li>
-              <li><Link href="/services" className="text-blue-200 hover:text-accent-500 transition-colors duration-200">Services</Link></li>
-              <li><Link href="/use-cases" className="text-blue-200 hover:text-accent-500 transition-colors duration-200">Use Cases</Link></li>
-              <li><Link href="/how-it-works" className="text-blue-200 hover:text-accent-500 transition-colors duration-200">How It Works</Link></li>
+              <li>
+                <Link
+                  href="/about"
+                  className="text-blue-200 hover:text-accent-500 transition-colors duration-200"
+                >
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/services"
+                  className="text-blue-200 hover:text-accent-500 transition-colors duration-200"
+                >
+                  Services
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/use-cases"
+                  className="text-blue-200 hover:text-accent-500 transition-colors duration-200"
+                >
+                  Use Cases
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/how-it-works"
+                  className="text-blue-200 hover:text-accent-500 transition-colors duration-200"
+                >
+                  How It Works
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -79,13 +116,19 @@ export default function Footer() {
 
         <div className="border-t border-blue-600 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-blue-200 text-sm">
-            © {currentYear} AI Automation Agency. All rights reserved.
+            © {currentYear} KindFlow Automation. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <Link href="/privacy-policy" className="text-blue-200 dark:text-gray-300 hover:text-accent-500 dark:hover:text-accent-400 transition-colors duration-200 text-sm">
+            <Link
+              href="/privacy-policy"
+              className="text-blue-200 dark:text-gray-300 hover:text-accent-500 dark:hover:text-accent-400 transition-colors duration-200 text-sm"
+            >
               Privacy Policy
             </Link>
-            <Link href="/terms" className="text-blue-200 dark:text-gray-300 hover:text-accent-500 dark:hover:text-accent-400 transition-colors duration-200 text-sm">
+            <Link
+              href="/terms"
+              className="text-blue-200 dark:text-gray-300 hover:text-accent-500 dark:hover:text-accent-400 transition-colors duration-200 text-sm"
+            >
               Terms of Service
             </Link>
           </div>
