@@ -1,8 +1,7 @@
+"use client";
 
-'use client';
-
-import { useEffect, ReactNode } from 'react';
-import Lenis from 'lenis';
+import { useEffect, ReactNode } from "react";
+import Lenis from "lenis";
 
 interface LenisProviderProps {
   children: ReactNode;
@@ -10,33 +9,49 @@ interface LenisProviderProps {
 
 export default function LenisProvider({ children }: LenisProviderProps) {
   useEffect(() => {
-    const lenis = new Lenis({
-      lerp: 0.08, // Smoother interpolation
-      duration: 1.5, // Slightly longer duration for smoother feel
-      smoothWheel: true,
-      wheelMultiplier: 0.8, // Reduced for more controlled scrolling
-      touchMultiplier: 1.5, // Better touch experience
-      infinite: false,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Custom easing
-    });
+    // ✅ iOS / touch devices: keep native scroll to avoid sticky/fixed bugs
+    const isTouch =
+      typeof window !== "undefined" &&
+      (navigator.maxTouchPoints > 0 ||
+        "ontouchstart" in window ||
+        window.matchMedia("(pointer: coarse)").matches);
 
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
+    // ✅ Respect reduced-motion users
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // If touch device or reduced motion -> don't enable Lenis
+    if (isTouch || prefersReducedMotion) {
+      return;
     }
 
-    requestAnimationFrame(raf);
+    const lenis = new Lenis({
+      lerp: 0.08,
+      duration: 1.5,
+      smoothWheel: true,
+      wheelMultiplier: 0.8,
+      // ✅ avoid touch smoothing entirely
+      // smoothTouch: false,
+      touchMultiplier: 1,
+      infinite: false,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    });
 
-    // Add scroll-to-top functionality
-    const scrollToTop = () => {
-      lenis.scrollTo(0, { duration: 1.5 });
+    let rafId = 0;
+    const raf = (time: number) => {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
     };
+    rafId = requestAnimationFrame(raf);
 
-    // Expose lenis globally for other components to use
+    const scrollToTop = () => lenis.scrollTo(0, { duration: 1.2 });
+
     (window as any).lenis = lenis;
     (window as any).scrollToTop = scrollToTop;
 
     return () => {
+      cancelAnimationFrame(rafId);
       lenis.destroy();
       delete (window as any).lenis;
       delete (window as any).scrollToTop;

@@ -9,7 +9,10 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-
+  webpack: (config) => {
+    config.cache = false; // disable webpack filesystem cache
+    return config;
+  },
   typescript: {
     // ignoreBuildErrors: true,
   },

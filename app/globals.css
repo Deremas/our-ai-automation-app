@@ -7,6 +7,11 @@
 html {
   scrollbar-width: thin;
   scrollbar-color: rgba(100, 116, 139, 0.3) transparent; /* subtle thumb */
+    scrollbar-gutter: stable;
+}
+
+body {
+  overflow-y: scroll;
 }
 
 /* ---------- Light Mode (Default) ---------- */

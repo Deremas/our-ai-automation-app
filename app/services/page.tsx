@@ -1,307 +1,539 @@
+"use client";
 
-'use client';
+import Link from "next/link";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import AnimatedSection from "@/components/AnimatedSection";
+import { useLanguage } from "@/components/LanguageProvider";
+import { t } from "@/lib/site-copy";
+import { Boxes, LayoutGrid, ShoppingCart, Monitor } from "lucide-react";
+import { motion } from "framer-motion";
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import AnimatedSection from '@/components/AnimatedSection';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+type RawHowItHelps = { h1?: unknown; h2?: unknown; h3?: unknown };
+type RawRecommended = {
+  r1?: unknown;
+  r2?: unknown;
+  r3?: unknown;
+  r4?: unknown;
+};
+
+type RawService = {
+  title?: unknown;
+  description?: unknown;
+  benefits?: unknown;
+  f1?: unknown;
+  f2?: unknown;
+  f3?: unknown;
+  f4?: unknown;
+  imageAlt?: unknown;
+
+  whatItIs?: unknown;
+  howItHelps?: unknown;
+  recommendedAddOns?: unknown;
+};
+
+type Service = {
+  title: string;
+  description: string;
+  benefits: string;
+  features: string[];
+  imageAlt: string;
+
+  whatItIs?: string;
+  howItHelps?: string[];
+  recommendedAddOns?: string[];
+};
+
+function toServiceArray(x: unknown): Service[] {
+  if (!x || typeof x !== "object" || Array.isArray(x)) return [];
+  const items = Object.values(x) as RawService[];
+
+  return items
+    .filter((s) => s && typeof s === "object")
+    .map((s) => {
+      const title = typeof s.title === "string" ? s.title : "";
+      const description =
+        typeof s.description === "string" ? s.description : "";
+      const benefits = typeof s.benefits === "string" ? s.benefits : "";
+      const imageAlt = typeof s.imageAlt === "string" ? s.imageAlt : title;
+
+      // keep your existing title/description/benefits/f1..f4 to replace it easy
+      const features = [s.f1, s.f2, s.f3, s.f4].filter(
+        (f): f is string => typeof f === "string" && f.trim().length > 0
+      );
+
+      const whatItIs =
+        typeof s.whatItIs === "string" && s.whatItIs.trim().length > 0
+          ? s.whatItIs
+          : undefined;
+
+      let howItHelps: string[] | undefined;
+      if (
+        s.howItHelps &&
+        typeof s.howItHelps === "object" &&
+        !Array.isArray(s.howItHelps)
+      ) {
+        const h = s.howItHelps as RawHowItHelps;
+        const list = [h.h1, h.h2, h.h3].filter(
+          (v): v is string => typeof v === "string" && v.trim().length > 0
+        );
+        if (list.length) howItHelps = list;
+      }
+
+      let recommendedAddOns: string[] | undefined;
+      if (
+        s.recommendedAddOns &&
+        typeof s.recommendedAddOns === "object" &&
+        !Array.isArray(s.recommendedAddOns)
+      ) {
+        const r = s.recommendedAddOns as RawRecommended;
+        const list = [r.r1, r.r2, r.r3, r.r4].filter(
+          (v): v is string => typeof v === "string" && v.trim().length > 0
+        );
+        if (list.length) recommendedAddOns = list;
+      }
+
+      return {
+        title,
+        description,
+        benefits,
+        features,
+        imageAlt,
+        whatItIs,
+        howItHelps,
+        recommendedAddOns,
+      };
+    })
+    .filter((s) => s.title.length > 0 && s.description.length > 0);
+}
+
+function safeLabel(value: string, fallback: string) {
+  // If translation is missing, t() returns the key itself (e.g. "services.modal.whatItIsLabel")
+  // This prevents those keys from showing in UI.
+  if (!value) return fallback;
+  if (value.includes(".") && value.startsWith("services.")) return fallback;
+  return value;
+}
 
 export default function ServicesPage() {
-  const [isVisible, setIsVisible] = useState(false);
-  type Service = {
-    id: number;
-    title: string;
-    description: string;
-    icon: string;
-    features: string[];
-    benefits: string;
-    image: string;
-  };
-  const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const { lang } = useLanguage();
 
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
+  const servicesListRaw = t<unknown>(lang, "services.list");
+  const servicesAll = toServiceArray(servicesListRaw);
 
-  const services = [
-    {
-      id: 1,
-      title: 'AI Workflow Automation',
-      description: 'Streamline your business processes with intelligent automation that learns and adapts to your workflow patterns.',
-      icon: 'ri-robot-line',
-      features: ['Process Mining', 'Automated Decision Making', 'Workflow Optimization', 'Real-time Monitoring'],
-      benefits: 'Reduce manual work by 80% and increase accuracy by 95%',
-      image: './images/workflow1.jpg'
-    },
-    {
-      id: 2,
-      title: 'AI-Powered Chatbots',
-      description: 'Deploy intelligent conversational agents that provide 24/7 customer support with human-like interactions.',
-      icon: 'ri-chat-3-line',
-      features: ['Natural Language Processing', 'Multi-language Support', 'Integration Ready', 'Learning Capabilities'],
-      benefits: 'Handle 90% of customer inquiries instantly and improve satisfaction rates',
-      image: './images/workflow2.jpg'
-    },
-    {
-      id: 3,
-      title: 'Process Optimization',
-      description: 'Analyze and enhance your existing processes using AI-driven insights and recommendations.',
-      icon: 'ri-settings-3-line',
-      features: ['Performance Analytics', 'Bottleneck Detection', 'Resource Allocation', 'Continuous Improvement'],
-      benefits: 'Optimize efficiency by 60% and reduce operational costs significantly',
-      image: './images/workflow3.jpg'
-    },
-    {
-      id: 4,
-      title: 'Predictive Analytics',
-      description: 'Leverage machine learning to forecast trends, identify opportunities, and make data-driven decisions.',
-      icon: 'ri-line-chart-line',
-      features: ['Trend Forecasting', 'Risk Assessment', 'Market Analysis', 'Strategic Planning'],
-      benefits: 'Increase forecast accuracy by 85% and identify opportunities 3 months earlier',
-      image: './images/workflow4.jpg'
-    }
-  ];
+  // ✅ Keep AI Strategy & Consulting as 3rd item for ALL langs
+  // Now the list is: s1,s2,s3,s4,s5,s6 (strategy is s5, digital is s6)
+  // desired order: s1, s2, s5, s3, s4, s6
+  const order = [4, 0, 1, 2, 3, 5];
+  const services = order.map((i) => servicesAll[i]).filter(Boolean);
 
-  // ...existing code...
-  const ServiceModal = ({ service, onClose }: { service: Service | null; onClose: () => void }) => {
-    if (!service) return null;
+  const platformDefs = [
+    { key: "erp", Icon: Boxes },
+    { key: "customApps", Icon: LayoutGrid },
+    { key: "ecommerce", Icon: ShoppingCart },
+    { key: "websites", Icon: Monitor },
+  ] as const;
 
-    return (
-      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-        <div className="bg-white dark:bg-slate-800 rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-          <div className="p-6">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+  const platforms = platformDefs.map((p) => ({
+    key: p.key,
+    title: t<string>(lang, `services.platforms.${p.key}.title`),
+    desc: t<string>(lang, `services.platforms.${p.key}.desc`),
+    Icon: p.Icon,
+    points: [
+      t<string>(lang, `services.platforms.${p.key}.points.p1`),
+      t<string>(lang, `services.platforms.${p.key}.points.p2`),
+      t<string>(lang, `services.platforms.${p.key}.points.p3`),
+    ].filter(Boolean),
+  }));
+
+  // const platforms = platformDefs.map((p) => ({
+  //   key: p.key,
+  //   title: t<string>(lang, `home.platforms.${p.key}.title`),
+  //   desc: t<string>(lang, `home.platforms.${p.key}.desc`),
+  //   Icon: p.Icon,
+  // }));
+
+  const whatItIsLabel = safeLabel(
+    t<string>(lang, "services.modal.whatItIsLabel"),
+    "What it is:"
+  );
+  const coreFeaturesLabel = safeLabel(
+    t<string>(lang, "services.modal.coreFeaturesLabel"),
+    "Core features:"
+  );
+  const addOnsLabel = safeLabel(
+    t<string>(lang, "services.modal.recommendedAddOnsLabel"),
+    "Recommended add-ons"
+  );
+  const impactLabel = safeLabel(
+    t<string>(lang, "services.modal.impactLabel"),
+    "Impact"
+  );
+
+  const recommendedStartingPointLabel = safeLabel(
+    t<string>(lang, "services.recommendedStartingPoint"),
+    "Recommended starting point"
+  );
+
+  return (
+    <div className="min-h-screen bg-white dark:bg-slate-900">
+      <Header />
+
+      {/* Hero */}
+      <section className="py-32 bg-gradient-to-br from-primary-500 to-primary-600 text-white text-center">
+        <h1 className="text-5xl font-bold mb-6">
+          {t<string>(lang, "services.hero.title")}
+        </h1>
+        <p className="text-xl max-w-3xl mx-auto">
+          {t<string>(lang, "services.hero.subtitle")}
+        </p>
+      </section>
+
+      {/* Services */}
+      <AnimatedSection className="py-32">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 px-6">
+          {services.map((service, i) => (
+            <div
+              key={i}
+              className="bg-gray-50 dark:bg-slate-800 p-8 rounded-xl shadow-lg"
+            >
+              {/* Strategy badge (3rd card) */}
+              {i === 0 && (
+                // <div className="inline-flex items-center gap-2 mb-3 px-3 py-1 rounded-full text-xs font-semibold bg-primary-50 text-primary-600 dark:bg-slate-700 dark:text-white">
+                <div className="inline-flex items-center gap-2 mb-3 px-3 py-1 rounded-full text-xs font-semibold bg-primary-50 text-primary-600 dark:bg-slate-700 dark:text-accent-500">
+                  <i className="ri-star-fill text-yellow-400 drop-shadow-[0_0_6px_rgba(250,204,21,0.9)]" />
+
+                  {recommendedStartingPointLabel}
+                </div>
+              )}
+
+              {/* <h3 className="text-2xl font-bold mb-3 text-primary-500"> */}
+              <h3 className="text-2xl font-bold mb-3 text-primary-600 dark:text-accent-500">
                 {service.title}
               </h3>
-              <button 
-                onClick={onClose}
-                className="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg transition-colors duration-200"
-              >
-                <div className="w-6 h-6 flex items-center justify-center">
-                  <i className="ri-close-line text-gray-500"></i>
-                </div>
-              </button>
+
+              <p className="mb-4 text-gray-600 dark:text-gray-300">
+                {service.description}
+              </p>
+
+              {!!service.whatItIs && (
+                <p className="mb-4 text-sm text-gray-700 dark:text-gray-200 leading-relaxed">
+                  <span className="font-semibold text-gray-900 dark:text-white">
+                    {whatItIsLabel}{" "}
+                  </span>
+                  {service.whatItIs}
+                </p>
+              )}
+
+              {!!service.howItHelps?.length && (
+                <ul className="mb-4 space-y-2">
+                  {service.howItHelps.map((h, idx) => (
+                    <li key={idx} className="flex items-center gap-2">
+                      <i className="ri-check-line text-accent-500" />
+                      <span className="text-gray-600 dark:text-gray-300">
+                        {h}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {service.features.length > 0 && (
+                <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                  <span className="font-semibold text-gray-900 dark:text-white">
+                    {coreFeaturesLabel}{" "}
+                  </span>
+                  {service.features.join(" • ")}
+                </p>
+              )}
+
+              {!!service.recommendedAddOns?.length && (
+                <details className="mb-4">
+                  {/* <summary className="cursor-pointer text-sm font-semibold text-primary-500"> */}
+                  <summary className="cursor-pointer text-sm font-semibold text-primary-600 dark:text-accent-500">
+                    {addOnsLabel}
+                  </summary>
+                  <ul className="mt-3 space-y-2">
+                    {service.recommendedAddOns.map((r, idx) => (
+                      <li key={idx} className="flex items-center gap-2">
+                        <i className="ri-add-circle-line text-accent-500" />
+                        <span className="text-gray-600 dark:text-gray-300">
+                          {r}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              )}
+
+              <div className="pt-4 border-t border-gray-200 dark:border-slate-700">
+                <p className="text-sm font-semibold text-gray-900 dark:text-white mb-1">
+                  {impactLabel}
+                </p>
+                {/* <p className="font-medium">{service.benefits}</p> */}
+                <p className="font-medium text-gray-800 dark:text-slate-100">
+                  {service.benefits}
+                </p>
+              </div>
             </div>
+          ))}
+        </div>
 
-            <img 
-              src={service.image}
-              alt={service.title}
-              className="w-full h-48 object-cover rounded-lg mb-6"
-            />
-
-            <p className="text-gray-600 dark:text-gray-300 mb-6 text-lg">
-              {service.description}
-            </p>
-
-            <div className="mb-6">
-              <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                Key Features
-              </h4>
-              <ul className="space-y-2">
-                {service.features.map((feature, index) => (
-                  <li key={index} className="flex items-center text-gray-600 dark:text-gray-300">
-                    <div className="w-5 h-5 flex items-center justify-center mr-3">
-                      <i className="ri-check-line text-accent-500"></i>
-                    </div>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="bg-primary-500/10 dark:bg-accent-500/10 rounded-lg p-4 mb-6">
-              <h4 className="text-lg font-semibold text-primary-500 dark:text-accent-500 mb-2">
-                Expected Benefits
-              </h4>
-              <p className="text-gray-700 dark:text-gray-300">
-                {service.benefits}
+        {/* Platforms We Build */}
+        <AnimatedSection className="mt-16" delay={0.2}>
+          <div className="bg-gray-50 dark:bg-slate-800 rounded-2xl p-8 border border-gray-200 dark:border-slate-700">
+            <div className="text-center mb-10">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                {t(lang, "services.platformsBlock.title")}
+              </h3>
+              <p className="mt-2 text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                {t(lang, "services.platformsBlock.subtitle")}
               </p>
             </div>
 
-            <div className="flex gap-4">
-              <Link 
-                href="/contact"
-                className="flex-1 bg-primary-500 text-white py-3 px-6 rounded-lg hover:bg-primary-600 transition-colors duration-300 text-center font-medium whitespace-nowrap"
-              >
-                Get Started
-              </Link>
-              <button 
-                onClick={onClose}
-                className="flex-1 border border-gray-300 dark:border-slate-600 text-gray-700 dark:text-gray-300 py-3 px-6 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors duration-200 font-medium whitespace-nowrap"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-        </div>
-    );
-  };
-
-  return (
-    <div className="min-h-screen bg-white dark:bg-slate-900 transition-colors duration-300">
-      <Header />
-
-      {/* Hero Section */}
-      <AnimatedSection className="relative py-32 bg-gradient-to-br from-primary-500 to-primary-600 overflow-hidden">
-        <div
-          className="absolute inset-0 w-full h-full"
-          style={{
-            backgroundImage: "url('./images/page-bg.jpg')",
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            zIndex: 0
-          }}
-        />
-        <div className="absolute inset-0 bg-primary-500/80" style={{ zIndex: 1 }}></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center" style={{ zIndex: 2 }}>
-          <motion.div className={`transition-all duration-1000 ${isVisible ? 'animate-fade-up' : 'opacity-0'}`}
-            initial={{ opacity: 0, y: 40 }}
-            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-            transition={{ duration: 0.8 }}>
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-              Our AI Services
-            </h1>
-            <p className="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
-              Comprehensive AI automation solutions designed to transform your business operations and drive unprecedented growth
-            </p>
-          </motion.div>
-        </div>
-      </AnimatedSection>
-
-      {/* Services Grid Section */}
-      <AnimatedSection className="py-32 bg-white dark:bg-slate-900 transition-colors duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-8">
-            {services.map((service, index) => (
-              <AnimatedSection key={service.id} delay={index * 0.15}>
-                <div 
-                  className={`group bg-gray-50 dark:bg-slate-800 rounded-xl p-8 hover:shadow-xl transition-all duration-300 cursor-pointer hover:scale-105 ${isVisible ? 'animate-fade-up' : 'opacity-0'}`}
-                  style={{ animationDelay: `${index * 200}ms` }}
-                  onClick={() => setSelectedService(service)}
+            {/* What you get bullets (service-like) */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+              {["b1", "b2", "b3"].map((k) => (
+                <div
+                  key={k}
+                  className="flex items-center gap-3 bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-700 p-4"
                 >
-                  <div className="flex items-center mb-6">
-                    <div className="w-12 h-12 bg-primary-500 dark:bg-accent-500 rounded-lg flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-300">
-                      <i className={`${service.icon} text-white text-xl`}></i>
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                      {service.title}
-                    </h3>
+                  <div className="w-10 h-10 rounded-xl bg-primary-50 dark:bg-slate-700 flex items-center justify-center shrink-0">
+                    {/* <i className="ri-check-line text-primary-600 dark:text-white text-lg" /> */}
+                    <i className="ri-check-line text-primary-600 dark:text-accent-500 text-lg" />
                   </div>
-                  <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                    {service.description}
+                  <p className="text-sm text-gray-700 dark:text-gray-200 leading-relaxed">
+                    {t(lang, `services.platformsBlock.bullets.${k}`)}
                   </p>
-                  <div className="flex items-center text-primary-500 dark:text-accent-500 font-medium group-hover:text-accent-500 dark:group-hover:text-white transition-colors duration-200">
-                    <span>Learn More</span>
-                    <div className="w-5 h-5 flex items-center justify-center ml-2 group-hover:translate-x-1 transition-transform duration-200">
-                      <i className="ri-arrow-right-line"></i>
-                    </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Platform cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* {platforms.map((p) => (
+                <div
+                  key={p.key}
+                  className="group bg-white dark:bg-slate-900 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-slate-700 transition-all duration-200 hover:shadow-md"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-primary-50 dark:bg-slate-700 flex items-center justify-center mb-4 transition-colors group-hover:bg-primary-100 dark:group-hover:bg-slate-600">
+                    <p.Icon className="w-6 h-6 text-primary-600 dark:text-white" />
                   </div>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </AnimatedSection>
 
-      {/* Why Choose Section */}
-      <AnimatedSection className="py-32 bg-gray-50 dark:bg-slate-800 transition-colors duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedSection className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              Why Choose Our AI Solutions?
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              We combine cutting-edge technology with human expertise to deliver results that matter
-            </p>
-          </AnimatedSection>
+                  <p className="font-semibold text-gray-900 dark:text-white">
+                    {p.title}
+                  </p>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <AnimatedSection delay={0}>
-              <div className="text-center transition-all duration-1000">
-                <div className="w-16 h-16 bg-primary-500 dark:bg-accent-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <i className="ri-speed-line text-white text-2xl"></i>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                  Fast Implementation
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Deploy AI solutions in weeks, not months, with our proven methodology
-                </p>
-              </div>
-            </AnimatedSection>
-            <AnimatedSection delay={0.15}>
-              <div className="text-center transition-all duration-1000">
-                <div className="w-16 h-16 bg-primary-500 dark:bg-accent-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <i className="ri-shield-check-line text-white text-2xl"></i>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                  Secure & Reliable
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Enterprise-grade security with 99.9% uptime guarantee
-                </p>
-              </div>
-            </AnimatedSection>
-            <AnimatedSection delay={0.3}>
-              <div className="text-center transition-all duration-1000">
-                <div className="w-16 h-16 bg-primary-500 dark:bg-accent-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <i className="ri-customer-service-line text-white text-2xl"></i>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                  24/7 Support
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Dedicated support team available around the clock
-                </p>
-              </div>
-            </AnimatedSection>
-          </div>
-        </div>
-      </AnimatedSection>
+                  <p className="mt-2 text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                    {p.desc}
+                  </p>
 
-      {/* CTA Section */}
-      <AnimatedSection className="py-32 bg-primary-500 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className={`transition-all duration-1000 ${isVisible ? 'animate-fade-up' : 'opacity-0'}`}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Ready to Get Started?
-            </h2>
-            <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-              Let's discuss how our AI solutions can transform your business operations
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link 
-                href="/contact"
-                className="inline-flex items-center justify-center px-8 py-3 bg-accent-500 text-white rounded-lg hover:bg-accent-600 transition-all duration-300 font-medium text-lg hover:scale-105 whitespace-nowrap group"
-              >
-                Get Free Consultation
-                <div className="w-5 h-5 ml-2 flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
-                  <i className="ri-arrow-right-line"></i>
+                  {!!p.points?.length && (
+                    <ul className="mt-4 space-y-2">
+                      {p.points.map((x, idx) => (
+                        <li key={idx} className="flex items-start gap-2">
+                          <i className="ri-arrow-right-s-line text-accent-500 mt-0.5" />
+                          <span className="text-sm text-gray-700 dark:text-gray-200">
+                            {x}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
-              </Link>
-              <Link 
-                href="/how-it-works"
-                className="inline-flex items-center justify-center px-8 py-3 border-2 border-white text-white rounded-lg hover:bg-white hover:text-primary-500 transition-all duration-300 font-medium text-lg hover:scale-105 whitespace-nowrap group"
-              >
-                Learn How It Works
-                <div className="w-5 h-5 ml-2 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-                  <i className="ri-play-circle-line"></i>
-                </div>
-              </Link>
+              ))} */}
+              {platforms.map((p) => (
+                <motion.div
+                  key={p.key}
+                  whileHover={{
+                    y: -8,
+                    scale: 1.02,
+                    boxShadow: "0 22px 45px -18px rgba(0,0,0,0.25)",
+                  }}
+                  transition={{ type: "spring", stiffness: 260, damping: 18 }}
+                  className="group bg-white dark:bg-slate-900 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-slate-700 transition-all duration-200 hover:shadow-md"
+                >
+                  <motion.div
+                    whileHover={{ rotate: 6, scale: 1.08 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 16 }}
+                    className="w-12 h-12 rounded-xl bg-primary-50 dark:bg-slate-700 flex items-center justify-center mb-4 transition-colors group-hover:bg-primary-100 dark:group-hover:bg-slate-600"
+                  >
+                    {/* <p.Icon className="w-6 h-6 text-primary-600 dark:text-white" /> */}
+                    <p.Icon className="w-6 h-6 text-primary-600 dark:text-accent-500" />
+                  </motion.div>
+
+                  <p className="font-semibold text-gray-900 dark:text-white">
+                    {p.title}
+                  </p>
+                  <p className="mt-2 text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                    {p.desc}
+                  </p>
+
+                  {!!p.points?.length && (
+                    <ul className="mt-4 space-y-2">
+                      {p.points.map((x, idx) => (
+                        <li key={idx} className="flex items-start gap-2">
+                          <i className="ri-arrow-right-s-line text-accent-500 mt-0.5" />
+                          <span className="text-sm text-gray-700 dark:text-gray-200">
+                            {x}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </motion.div>
+              ))}
             </div>
           </div>
+        </AnimatedSection>
+
+        {/* CTA */}
+        <div className="mt-16 flex justify-center gap-4 px-6">
+          <Link
+            href="/contact"
+            className="px-8 py-4 bg-primary-500 text-white rounded-lg font-semibold"
+          >
+            {t<string>(lang, "services.cta.primary")}
+          </Link>
+          <Link
+            href="/how-it-works"
+            // className="px-8 py-4 border border-primary-500 text-primary-500 rounded-lg font-semibold"
+            className="
+  px-8 py-4 rounded-lg font-semibold
+  border border-primary-500 text-primary-600
+  dark:border-accent-500 dark:text-accent-500
+"
+          >
+            {t<string>(lang, "services.cta.secondary")}
+          </Link>
         </div>
       </AnimatedSection>
 
       <Footer />
-      <ServiceModal 
-        service={selectedService} 
-        onClose={() => setSelectedService(null)} 
-      />
     </div>
   );
 }
+
+// "use client";
+
+// import Link from "next/link";
+// import Header from "@/components/Header";
+// import Footer from "@/components/Footer";
+// import AnimatedSection from "@/components/AnimatedSection";
+// import { useLanguage } from "@/components/LanguageProvider";
+// import { t } from "@/lib/site-copy";
+
+// type RawService = {
+//   title?: unknown;
+//   description?: unknown;
+//   benefits?: unknown;
+//   f1?: unknown;
+//   f2?: unknown;
+//   f3?: unknown;
+//   f4?: unknown;
+//   imageAlt?: unknown;
+// };
+
+// type Service = {
+//   title: string;
+//   description: string;
+//   benefits: string;
+//   features: string[];
+//   imageAlt: string;
+// };
+
+// function toServiceArray(x: unknown): Service[] {
+//   if (!x || typeof x !== "object" || Array.isArray(x)) return [];
+
+//   const items = Object.values(x) as RawService[];
+
+//   return items
+//     .filter((s) => s && typeof s === "object")
+//     .map((s) => {
+//       const title = typeof s.title === "string" ? s.title : "";
+//       const description =
+//         typeof s.description === "string" ? s.description : "";
+//       const benefits = typeof s.benefits === "string" ? s.benefits : "";
+//       const imageAlt = typeof s.imageAlt === "string" ? s.imageAlt : title;
+
+//       const features = [s.f1, s.f2, s.f3, s.f4].filter(
+//         (f): f is string => typeof f === "string" && f.trim().length > 0
+//       );
+
+//       return { title, description, benefits, features, imageAlt };
+//     })
+//     .filter((s) => s.title.length > 0 && s.description.length > 0);
+// }
+
+// export default function ServicesPage() {
+//   const { lang } = useLanguage();
+
+//   const servicesListRaw = t<unknown>(lang, "services.list");
+//   const services = toServiceArray(servicesListRaw);
+
+//   return (
+//     <div className="min-h-screen bg-white dark:bg-slate-900">
+//       <Header />
+
+//       {/* Hero */}
+//       <section className="py-32 bg-gradient-to-br from-primary-500 to-primary-600 text-white text-center">
+//         <h1 className="text-5xl font-bold mb-6">
+//           {t<string>(lang, "services.hero.title")}
+//         </h1>
+//         <p className="text-xl max-w-3xl mx-auto">
+//           {t<string>(lang, "services.hero.subtitle")}
+//         </p>
+//       </section>
+
+//       {/* Services */}
+//       <AnimatedSection className="py-32">
+//         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 px-6">
+//           {services.map((service, i) => (
+//             <div
+//               key={i}
+//               className="bg-gray-50 dark:bg-slate-800 p-8 rounded-xl shadow-lg"
+//             >
+//               <h3 className="text-2xl font-bold mb-4 text-primary-500">
+//                 {service.title}
+//               </h3>
+//               <p className="mb-4 text-gray-600 dark:text-gray-300">
+//                 {service.description}
+//               </p>
+
+//               {service.features.length > 0 && (
+//                 <ul className="mb-4 space-y-2">
+//                   {service.features.map((f, j) => (
+//                     <li key={j} className="flex items-center gap-2">
+//                       <i className="ri-check-line text-accent-500" />
+//                       {f}
+//                     </li>
+//                   ))}
+//                 </ul>
+//               )}
+
+//               <p className="font-medium">{service.benefits}</p>
+//             </div>
+//           ))}
+//         </div>
+
+//         {/* CTA */}
+//         <div className="mt-16 flex justify-center gap-4 px-6">
+//           <Link
+//             href="/contact"
+//             className="px-8 py-4 bg-primary-500 text-white rounded-lg font-semibold"
+//           >
+//             {t<string>(lang, "services.cta.primary")}
+//           </Link>
+//           <Link
+//             href="/how-it-works"
+//             className="px-8 py-4 border border-primary-500 text-primary-500 rounded-lg font-semibold"
+//           >
+//             {t<string>(lang, "services.cta.secondary")}
+//           </Link>
+//         </div>
+//       </AnimatedSection>
+
+//       <Footer />
+//     </div>
+//   );
+// }

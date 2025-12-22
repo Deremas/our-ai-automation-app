@@ -3,26 +3,36 @@ import "./globals.css";
 import LenisProvider from "@/components/LenisProvider";
 import ScrollToTop from "@/components/ScrollToTop";
 import ChatWidget from "@/components/ChatWidget";
+import Providers from "./providers";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://kindflowautomation.com"), // change domain
+  metadataBase: new URL("https://luxaiautomation.com"), // change domain
   title: {
-    default: "KindFlow Automation – AI Workflow & Automation",
+    default: "Lux AI Consultancy & Automation – AI Workflow & Automation",
     template: "%s | KindFlow Automation",
   },
   description:
-    "KindFlow Automation builds AI-powered workflow automation, ERP systems, system integrations, and intelligent chatbots for modern businesses.",
+    "Lux AI Consultancy & Automation builds AI-powered workflow automation, ERP systems, system integrations, and intelligent chatbots for modern businesses.",
   keywords: [
-    "KindFlow Automation",
+    "Lux AI Consultancy & Automation",
+    "Lux AI Automation",
+    "LuxAI Automation",
     "AI automation",
+    "AI strategy",
+    "AI Consultancy",
     "workflow automation",
     "business process automation",
     "AI integration",
     "ERP development",
+    "ERP system",
+    "Custom websites",
+    "ERP systems",
     "custom ERP software",
     "system integration",
     "CRM integration",
     "API automation",
+    "API integration",
+    "AI API integration",
     "business automation software",
     "AI chatbot",
     "multilingual chatbot",
@@ -33,27 +43,28 @@ export const metadata: Metadata = {
     "stock management software",
     "ecommerce automation",
   ],
-  authors: [{ name: "KindFlow Automation" }],
-  creator: "KindFlow Automation",
-  publisher: "KindFlow Automation",
+  authors: [{ name: "Lux AI Consultancy & Automation" }],
+  creator: "Lux AI Consultancy & Automation",
+  publisher: "Lux AI Consultancy & Automation",
   robots: {
     index: true,
     follow: true,
   },
   openGraph: {
-    title: "KindFlow Automation – AI Automation & ERP Systems",
+    title:
+      "Lux AI Consultancy & Automation – AI Automation & Systems integration",
     description:
-      "AI automation, ERP systems, workflow orchestration, and intelligent chatbots built for scalable businesses.",
-    url: "https://kindflowautomation.com",
-    siteName: "KindFlow Automation",
+      "AI automation, systems integration, ERP systems, workflow orchestration, and intelligent chatbots built for scalable businesses.",
+    url: "https://luxaiautomation.com",
+    siteName: "Lux AI Automation",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "KindFlow Automation",
+    title: "Lux AI Consultancy & Automation",
     description:
-      "AI-powered automation, ERP systems, system integrations, and chatbots.",
+      "AI-powered automation, systems integration, ERP systems, system integrations, and chatbots.",
   },
 };
 
@@ -63,31 +74,32 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Favicon */}
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        
       </head>
 
       <body
         className="
-          antialiased
-          bg-white
-          dark:bg-slate-900
-          text-gray-900
-          dark:text-gray-100
-          transition-colors
-          duration-300
-          font-sans
+          antialiased font-sans
+          bg-white dark:bg-slate-900
+          text-gray-900 dark:text-gray-100
+          transition-colors duration-300
         "
       >
         <LenisProvider>
-          {children}
-          <ChatWidget />
-          <ScrollToTop />
+          <Providers>{children}</Providers>
         </LenisProvider>
+
+        {/* ✅ outside Lenis so it's truly fixed */}
+        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[9999] flex flex-col gap-3">
+          <ScrollToTop />
+          <ChatWidget />
+        </div>
       </body>
     </html>
   );
 }
+
 
 // import type { Metadata } from "next";
 // import { Inter } from "next/font/google";

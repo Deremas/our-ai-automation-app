@@ -17,7 +17,7 @@ export type KBService = {
   name: KBLocalizedString;
   outcomes: KBLocalizedList;
   includes: KBLocalizedList;
-  notes?: KBLocalizedList; // ✅ optional across all services
+  notes?: KBLocalizedList; // optional across all services
   keywords: readonly string[];
 };
 
@@ -34,13 +34,13 @@ export type BusinessKB = {
     oneLiner: KBLocalizedString;
     positioning: KBLocalizedString;
   };
-  services: readonly KBService[]; // ✅ fixes union inference
+  services: readonly KBService[];
   industries: { list: KBLocalizedList };
   process: { steps: KBLocalizedList };
   leadQuestions: { list: KBLocalizedList };
   contact: {
-    email: string;
-    formUrl: string;
+    email: string; // keep plain
+    formUrl: string; // keep plain
     note: KBLocalizedString;
     cta: KBLocalizedString;
   };
@@ -488,7 +488,7 @@ export const BUSINESS_KB: BusinessKB = {
 
   contact: {
     email: "kindflow@automation.com",
-    formUrl: "/contact",
+    formUrl: "https://kindflowautomation.vercel.app/contact",
     note: {
       en: "Preferred: share details via our contact form or email so we can follow up with specifics.",
       fr: "Idéalement : partagez les détails via notre formulaire de contact ou par email afin que nous puissions répondre précisément.",

@@ -1,85 +1,53 @@
 // lib/chat-storage.ts
 
-const KEY = "mfg_chat_history_v2";
+import type { ChatLanguage } from "@/lib/languages";
 
 export type SafeMessage = {
   id: string;
   role: "user" | "assistant" | "system";
   content: string;
-  // optional: keep language if you want later
-  metadata?: { language?: "en" | "fr" | "de" | "lb" };
+  metadata?: { language?: ChatLanguage };
 };
 
-function extractText(m: any): string {
-  // supports both { content } and { parts: [{type:"text", text}] }
-  if (typeof m?.content === "string") return m.content;
+const STORAGE_KEY = "kindflow_chat_history_v1";
 
-  if (Array.isArray(m?.parts)) {
-    return m.parts
-      .filter((p: any) => p?.type === "text" && typeof p?.text === "string")
-      .map((p: any) => p.text)
-      .join("");
-  }
-
-  return "";
-}
-
-function toSafeMessage(m: any): SafeMessage {
-  return {
-    id: String(
-      m?.id ?? globalThis.crypto?.randomUUID?.() ?? Date.now().toString()
-    ),
-    role: (m?.role ?? "assistant") as SafeMessage["role"],
-    content: extractText(m),
-    metadata: m?.metadata?.language
-      ? { language: m.metadata.language }
-      : undefined,
-  };
+function isSafeMessage(x: any): x is SafeMessage {
+  return (
+    x &&
+    typeof x === "object" &&
+    typeof x.id === "string" &&
+    (x.role === "user" || x.role === "assistant" || x.role === "system") &&
+    typeof x.content === "string"
+  );
 }
 
 export function loadChatHistory(): SafeMessage[] {
   if (typeof window === "undefined") return [];
   try {
-    const raw = localStorage.getItem(KEY);
+    const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return [];
-
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
-
-    // validate + normalize
-    return parsed
-      .filter((m) => m && typeof m === "object")
-      .map((m) => ({
-        id: String(
-          m.id ?? globalThis.crypto?.randomUUID?.() ?? Date.now().toString()
-        ),
-        role: (m.role ?? "assistant") as SafeMessage["role"],
-        content: typeof m.content === "string" ? m.content : "",
-        metadata: m?.metadata?.language
-          ? { language: m.metadata.language }
-          : undefined,
-      }))
-      .filter((m) => m.content.length > 0);
+    return parsed.filter(isSafeMessage);
   } catch {
     return [];
   }
 }
 
-export function saveChatHistory(messages: any[]) {
+export function saveChatHistory(messages: SafeMessage[]) {
   if (typeof window === "undefined") return;
   try {
-    const safe = (messages ?? []).map(toSafeMessage);
-    localStorage.setItem(KEY, JSON.stringify(safe));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
   } catch {
-    // ignore quota errors
+    // ignore quota / access errors
   }
 }
 
 export function clearChatHistory() {
   if (typeof window === "undefined") return;
   try {
-    localStorage.removeItem(KEY);
-    // also clear old key if it exists
-    localStorage.removeItem("mfg_chat_history_v1");
-  } catch {}
+    localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    // ignore
+  }
 }
