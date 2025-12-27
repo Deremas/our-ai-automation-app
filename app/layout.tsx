@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "react-international-phone/style.css";
 import LenisProvider from "@/components/LenisProvider";
 import ScrollToTop from "@/components/ScrollToTop";
 import ChatWidget from "@/components/ChatWidget";
 import Providers from "./providers";
+import CookieConsent from "@/components/CookieConsent";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://luxaiautomation.com"), // change domain
@@ -72,10 +74,81 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className="scrollbar-gutter-stable"
+    >
       <head>
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        
+
+        {/* Apply theme + lang before first paint */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+(function () {
+  try {
+    // theme
+    var mTheme = document.cookie.match(/(?:^|; )theme=([^;]*)/);
+    var theme = mTheme ? decodeURIComponent(mTheme[1]) : null;
+    if (theme === "dark") document.documentElement.classList.add("dark");
+    if (theme === "light") document.documentElement.classList.remove("dark");
+
+    // lang
+    var mLang = document.cookie.match(/(?:^|; )lang=([^;]*)/);
+    var lang = mLang ? decodeURIComponent(mLang[1]) : null;
+    if (lang === "en" || lang === "fr" || lang === "de" || lang === "lb") {
+      document.documentElement.setAttribute("lang", lang);
+    }
+  } catch (e) {}
+})();
+        `,
+          }}
+        />
+
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+(function () {
+  try {
+    var html = document.documentElement;
+    var body = document.body;
+
+    function scrollbarWidth() {
+      return window.innerWidth - html.clientWidth;
+    }
+
+    function applyFix() {
+      var computed = window.getComputedStyle(body);
+      var overflowHidden =
+        body.style.overflow === "hidden" ||
+        computed.overflowY === "hidden" ||
+        body.classList.contains("overflow-hidden");
+
+      if (overflowHidden) {
+        var w = scrollbarWidth();
+        if (w > 0) body.style.paddingRight = w + "px";
+      } else {
+        body.style.paddingRight = "";
+      }
+    }
+
+    // run now + on resize
+    applyFix();
+    window.addEventListener("resize", applyFix);
+
+    // watch body style + class changes (Radix/Lenis/libs)
+    var obs = new MutationObserver(applyFix);
+    obs.observe(body, { attributes: true, attributeFilter: ["style", "class"] });
+
+    // optional: watch html too (some libs set overflow on html)
+    var obs2 = new MutationObserver(applyFix);
+    obs2.observe(html, { attributes: true, attributeFilter: ["style", "class"] });
+  } catch (e) {}
+})();
+`,
+          }}
+        />
       </head>
 
       <body
@@ -87,7 +160,11 @@ export default function RootLayout({
         "
       >
         <LenisProvider>
-          <Providers>{children}</Providers>
+          <Providers>
+            {children}
+            
+            <CookieConsent />
+          </Providers>
         </LenisProvider>
 
         {/* ✅ outside Lenis so it's truly fixed */}
@@ -99,46 +176,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-
-// import type { Metadata } from "next";
-// import { Inter } from "next/font/google";
-// import "./globals.css";
-// import LenisProvider from "@/components/LenisProvider";
-// import ScrollToTop from "@/components/ScrollToTop";
-// import ChatWidget from "@/components/ChatWidget";
-
-// const inter = Inter({
-//   subsets: ["latin"],
-//   display: "swap",
-// });
-
-// export const metadata: Metadata = {
-//   title: "AI Automation Agency - Automate Your Business with AI",
-//   description:
-//     "Boost efficiency, reduce costs, and scale smarter through AI automation solutions.",
-// };
-
-// export default function RootLayout({
-//   children,
-// }: Readonly<{
-//   children: React.ReactNode;
-// }>) {
-//   return (
-//     <html lang="en" suppressHydrationWarning={true}>
-//       <head>
-//         {/* Favicon accent color SVG */}
-//         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-//       </head>
-//       <body
-//         className={`${inter.className} antialiased bg-white dark:bg-slate-900 text-gray-900 gap-2 dark:text-gray-100 transition-colors duration-300`}
-//       >
-//         <LenisProvider>
-//           {children}
-//           <ChatWidget />
-//           <ScrollToTop />
-//         </LenisProvider>
-//       </body>
-//     </html>
-//   );
-// }

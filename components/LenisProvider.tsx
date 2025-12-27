@@ -31,8 +31,6 @@ export default function LenisProvider({ children }: LenisProviderProps) {
       duration: 1.5,
       smoothWheel: true,
       wheelMultiplier: 0.8,
-      // ✅ avoid touch smoothing entirely
-      // smoothTouch: false,
       touchMultiplier: 1,
       infinite: false,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),

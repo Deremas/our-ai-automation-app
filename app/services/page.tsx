@@ -311,37 +311,6 @@ export default function ServicesPage() {
 
             {/* Platform cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {/* {platforms.map((p) => (
-                <div
-                  key={p.key}
-                  className="group bg-white dark:bg-slate-900 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-slate-700 transition-all duration-200 hover:shadow-md"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-primary-50 dark:bg-slate-700 flex items-center justify-center mb-4 transition-colors group-hover:bg-primary-100 dark:group-hover:bg-slate-600">
-                    <p.Icon className="w-6 h-6 text-primary-600 dark:text-white" />
-                  </div>
-
-                  <p className="font-semibold text-gray-900 dark:text-white">
-                    {p.title}
-                  </p>
-
-                  <p className="mt-2 text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                    {p.desc}
-                  </p>
-
-                  {!!p.points?.length && (
-                    <ul className="mt-4 space-y-2">
-                      {p.points.map((x, idx) => (
-                        <li key={idx} className="flex items-start gap-2">
-                          <i className="ri-arrow-right-s-line text-accent-500 mt-0.5" />
-                          <span className="text-sm text-gray-700 dark:text-gray-200">
-                            {x}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              ))} */}
               {platforms.map((p) => (
                 <motion.div
                   key={p.key}
@@ -358,7 +327,6 @@ export default function ServicesPage() {
                     transition={{ type: "spring", stiffness: 300, damping: 16 }}
                     className="w-12 h-12 rounded-xl bg-primary-50 dark:bg-slate-700 flex items-center justify-center mb-4 transition-colors group-hover:bg-primary-100 dark:group-hover:bg-slate-600"
                   >
-                    {/* <p.Icon className="w-6 h-6 text-primary-600 dark:text-white" /> */}
                     <p.Icon className="w-6 h-6 text-primary-600 dark:text-accent-500" />
                   </motion.div>
 
@@ -397,7 +365,6 @@ export default function ServicesPage() {
           </Link>
           <Link
             href="/how-it-works"
-            // className="px-8 py-4 border border-primary-500 text-primary-500 rounded-lg font-semibold"
             className="
   px-8 py-4 rounded-lg font-semibold
   border border-primary-500 text-primary-600
@@ -413,127 +380,3 @@ export default function ServicesPage() {
     </div>
   );
 }
-
-// "use client";
-
-// import Link from "next/link";
-// import Header from "@/components/Header";
-// import Footer from "@/components/Footer";
-// import AnimatedSection from "@/components/AnimatedSection";
-// import { useLanguage } from "@/components/LanguageProvider";
-// import { t } from "@/lib/site-copy";
-
-// type RawService = {
-//   title?: unknown;
-//   description?: unknown;
-//   benefits?: unknown;
-//   f1?: unknown;
-//   f2?: unknown;
-//   f3?: unknown;
-//   f4?: unknown;
-//   imageAlt?: unknown;
-// };
-
-// type Service = {
-//   title: string;
-//   description: string;
-//   benefits: string;
-//   features: string[];
-//   imageAlt: string;
-// };
-
-// function toServiceArray(x: unknown): Service[] {
-//   if (!x || typeof x !== "object" || Array.isArray(x)) return [];
-
-//   const items = Object.values(x) as RawService[];
-
-//   return items
-//     .filter((s) => s && typeof s === "object")
-//     .map((s) => {
-//       const title = typeof s.title === "string" ? s.title : "";
-//       const description =
-//         typeof s.description === "string" ? s.description : "";
-//       const benefits = typeof s.benefits === "string" ? s.benefits : "";
-//       const imageAlt = typeof s.imageAlt === "string" ? s.imageAlt : title;
-
-//       const features = [s.f1, s.f2, s.f3, s.f4].filter(
-//         (f): f is string => typeof f === "string" && f.trim().length > 0
-//       );
-
-//       return { title, description, benefits, features, imageAlt };
-//     })
-//     .filter((s) => s.title.length > 0 && s.description.length > 0);
-// }
-
-// export default function ServicesPage() {
-//   const { lang } = useLanguage();
-
-//   const servicesListRaw = t<unknown>(lang, "services.list");
-//   const services = toServiceArray(servicesListRaw);
-
-//   return (
-//     <div className="min-h-screen bg-white dark:bg-slate-900">
-//       <Header />
-
-//       {/* Hero */}
-//       <section className="py-32 bg-gradient-to-br from-primary-500 to-primary-600 text-white text-center">
-//         <h1 className="text-5xl font-bold mb-6">
-//           {t<string>(lang, "services.hero.title")}
-//         </h1>
-//         <p className="text-xl max-w-3xl mx-auto">
-//           {t<string>(lang, "services.hero.subtitle")}
-//         </p>
-//       </section>
-
-//       {/* Services */}
-//       <AnimatedSection className="py-32">
-//         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 px-6">
-//           {services.map((service, i) => (
-//             <div
-//               key={i}
-//               className="bg-gray-50 dark:bg-slate-800 p-8 rounded-xl shadow-lg"
-//             >
-//               <h3 className="text-2xl font-bold mb-4 text-primary-500">
-//                 {service.title}
-//               </h3>
-//               <p className="mb-4 text-gray-600 dark:text-gray-300">
-//                 {service.description}
-//               </p>
-
-//               {service.features.length > 0 && (
-//                 <ul className="mb-4 space-y-2">
-//                   {service.features.map((f, j) => (
-//                     <li key={j} className="flex items-center gap-2">
-//                       <i className="ri-check-line text-accent-500" />
-//                       {f}
-//                     </li>
-//                   ))}
-//                 </ul>
-//               )}
-
-//               <p className="font-medium">{service.benefits}</p>
-//             </div>
-//           ))}
-//         </div>
-
-//         {/* CTA */}
-//         <div className="mt-16 flex justify-center gap-4 px-6">
-//           <Link
-//             href="/contact"
-//             className="px-8 py-4 bg-primary-500 text-white rounded-lg font-semibold"
-//           >
-//             {t<string>(lang, "services.cta.primary")}
-//           </Link>
-//           <Link
-//             href="/how-it-works"
-//             className="px-8 py-4 border border-primary-500 text-primary-500 rounded-lg font-semibold"
-//           >
-//             {t<string>(lang, "services.cta.secondary")}
-//           </Link>
-//         </div>
-//       </AnimatedSection>
-
-//       <Footer />
-//     </div>
-//   );
-// }

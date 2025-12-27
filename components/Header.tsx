@@ -8,7 +8,6 @@ import { useLanguage } from "@/components/LanguageProvider";
 import { APP_LANGUAGES, type AppLanguage } from "@/lib/i18n";
 import { getCookie, setPrefCookie, THEME_COOKIE } from "@/lib/prefsCookies";
 
-
 import {
   Select,
   SelectContent,
@@ -215,10 +214,35 @@ export default function Header() {
   const isActive = (href: string) => pathname === href;
 
   // lock scroll when menu open
+  // useEffect(() => {
+  //   document.body.style.overflow = isMenuOpen ? "hidden" : "";
+  //   return () => {
+  //     document.body.style.overflow = "";
+  //   };
+  // }, [isMenuOpen]);
+
+  // lock scroll when menu open (NO layout shift)
   useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? "hidden" : "";
+    const body = document.body;
+    const html = document.documentElement;
+
+    if (isMenuOpen) {
+      // scrollbar width = viewport - document width
+      const scrollBarWidth = window.innerWidth - html.clientWidth;
+
+      body.style.overflow = "hidden";
+      body.style.paddingRight = scrollBarWidth > 0 ? `${scrollBarWidth}px` : "";
+      body.setAttribute("data-menu-open", "true"); // (optional) for your chatbot
+    } else {
+      body.style.overflow = "";
+      body.style.paddingRight = "";
+      body.removeAttribute("data-menu-open");
+    }
+
     return () => {
-      document.body.style.overflow = "";
+      body.style.overflow = "";
+      body.style.paddingRight = "";
+      body.removeAttribute("data-menu-open");
     };
   }, [isMenuOpen]);
 
@@ -253,23 +277,25 @@ export default function Header() {
             <Link href="/" className="flex items-center gap-2 min-w-0">
               <span
                 className="
-                  flex items-center justify-center h-10 w-10 rounded-lg border-2
-                  border-primary-500 bg-primary-100 text-primary-600
-                  dark:bg-yellow-400/10 dark:border-accent-400 dark:text-accent-500
-                  font-bold text-lg transition-all duration-200 shrink-0
-                "
+    flex items-center justify-center h-10 w-10 rounded-full border-2
+    border-primary-500 bg-primary-100 text-primary-600
+    dark:bg-yellow-400/10 dark:border-accent-400 dark:text-accent-500
+    font-bold text-sm tracking-wide uppercase
+    transition-all duration-200 shrink-0
+  "
                 aria-label="Lux AI"
                 title="Lux AI Consultancy & Automation"
               >
-                AI
+                Lux
               </span>
-
               <span
                 className="
-                  hidden md:inline
-                  font-bold text-primary-600 dark:text-accent-600
-                  text-base lg:text-lg whitespace-nowrap
-                "
+    hidden md:block xl:inline
+    font-bold text-primary-600 dark:text-accent-600
+    text-sm lg:text-base xl:text-lg
+    leading-tight
+    max-w-[20rem] lg:max-w-[18rem] xl:max-w-none
+    whitespace-normal xl:whitespace-nowrap"
                 title="Lux AI Consultancy & Automation"
               >
                 Lux AI Consultancy & Automation
@@ -318,7 +344,9 @@ export default function Header() {
                 </SelectTrigger>
 
                 <SelectContent
-                  className="z-[2147483500] max-h-56 overflow-auto w-[var(--radix-select-trigger-width)] max-w-[calc(100vw-1.5rem)]"
+                  className="z-[2147483500] max-h-56 overflow-auto w-[var(--radix-select-trigger-width)] max-w-[calc(100vw-1.5rem)] bg-white dark:bg-slate-900
+    border border-gray-200 dark:border-slate-700
+    shadow-xl"
                   position="popper"
                   sideOffset={8}
                   align="start"
@@ -326,7 +354,17 @@ export default function Header() {
                   collisionPadding={12}
                 >
                   {APP_LANGUAGES.map((l) => (
-                    <SelectItem key={l.code} value={l.code}>
+                    <SelectItem
+                      key={l.code}
+                      value={l.code}
+                      className="
+        cursor-pointer
+        text-gray-900 dark:text-gray-100
+        focus:bg-gray-100 dark:focus:bg-slate-800
+        data-[highlighted]:bg-gray-100 dark:data-[highlighted]:bg-slate-800
+        data-[highlighted]:text-gray-900 dark:data-[highlighted]:text-gray-100
+      "
+                    >
                       {l.label}
                     </SelectItem>
                   ))}

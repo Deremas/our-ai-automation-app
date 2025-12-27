@@ -27,18 +27,6 @@ export default function ScrollToTop() {
     else window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-
-  // const scrollToTop = () => {
-  //   if ((window as any).lenis) {
-  //     (window as any).lenis.scrollTo(0, { duration: 1.5 });
-  //   } else {
-  //     window.scrollTo({
-  //       top: 0,
-  //       behavior: "smooth",
-  //     });
-  //   }
-  // };
-
   return (
     <button
       onClick={scrollToTop}

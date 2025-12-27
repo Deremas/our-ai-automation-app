@@ -10,7 +10,6 @@ import React, {
 import { DEFAULT_LANG, LANG_STORAGE_KEY, type AppLanguage } from "@/lib/i18n";
 import { getCookie, setPrefCookie, LANG_COOKIE } from "@/lib/prefsCookies";
 
-
 type LangCtx = {
   lang: AppLanguage;
   setLang: (l: AppLanguage) => void;
@@ -18,67 +17,50 @@ type LangCtx = {
 
 const LanguageContext = createContext<LangCtx | null>(null);
 
+const isAppLanguage = (v: any): v is AppLanguage =>
+  v === "en" || v === "fr" || v === "de" || v === "lb";
+
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLangState] = useState<AppLanguage>(DEFAULT_LANG);
 
-  // Load once
-  // useEffect(() => {
-  //   try {
-  //     const saved = localStorage.getItem(LANG_STORAGE_KEY);
-  //     if (
-  //       saved === "en" ||
-  //       saved === "fr" ||
-  //       saved === "de" ||
-  //       saved === "lb"
-  //     ) {
-  //       setLangState(saved);
-  //     }
-  //   } catch {}
-  // }, []);
+  useEffect(() => {
+    try {
+      // 1) cookie first
+      const cookieLang = getCookie(LANG_COOKIE);
+      if (isAppLanguage(cookieLang)) {
+        setLangState(cookieLang);
+        document.documentElement.setAttribute("lang", cookieLang); // ✅ apply immediately
+        return;
+      }
 
-useEffect(() => {
-  try {
-    // 1) cookie first (best for subdomains & server-friendly)
-    const cookieLang = getCookie(LANG_COOKIE);
-    if (
-      cookieLang === "en" ||
-      cookieLang === "fr" ||
-      cookieLang === "de" ||
-      cookieLang === "lb"
-    ) {
-      setLangState(cookieLang);
-      return;
+      // 2) fallback to localStorage
+      const saved = localStorage.getItem(LANG_STORAGE_KEY);
+      if (isAppLanguage(saved)) {
+        setLangState(saved);
+        document.documentElement.setAttribute("lang", saved); // ✅ apply immediately
+        return;
+      }
+
+      // 3) default
+      document.documentElement.setAttribute("lang", DEFAULT_LANG);
+    } catch {
+      document.documentElement.setAttribute("lang", DEFAULT_LANG);
     }
+  }, []);
 
-    // 2) fallback to localStorage (optional)
-    const saved = localStorage.getItem(LANG_STORAGE_KEY);
-    if (saved === "en" || saved === "fr" || saved === "de" || saved === "lb") {
-      setLangState(saved);
-    }
-  } catch {}
-}, []);
+  const setLang = (l: AppLanguage) => {
+    setLangState(l);
 
+    try {
+      localStorage.setItem(LANG_STORAGE_KEY, l);
+    } catch {}
 
-  // Persist
-  // const setLang = (l: AppLanguage) => {
-  //   setLangState(l);
-  //   try {
-  //     localStorage.setItem(LANG_STORAGE_KEY, l);
-  //   } catch {}
-  // };
+    try {
+      setPrefCookie(LANG_COOKIE, l); // ✅ persist as cookie
+    } catch {}
 
-const setLang = (l: AppLanguage) => {
-  setLangState(l);
-
-  try {
-    localStorage.setItem(LANG_STORAGE_KEY, l);
-  } catch {}
-
-  // ✅ persist as essential cookie
-  setPrefCookie(LANG_COOKIE, l);
     document.documentElement.setAttribute("lang", l);
-};
-
+  };
 
   const value = useMemo(() => ({ lang, setLang }), [lang]);
 

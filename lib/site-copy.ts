@@ -3,9 +3,14 @@ import { Boxes, LayoutGrid, ShoppingCart, Globe } from "lucide-react";
 export const SUPPORTED_LANGS = ["en", "fr", "de", "lb"] as const;
 export type Lang = (typeof SUPPORTED_LANGS)[number];
 
+
+type DeepValue = string | DeepRecord | readonly string[] | readonly DeepRecord[];
+;
+
 interface DeepRecord {
-  [key: string]: string | DeepRecord;
+  [key: string]: DeepValue;
 }
+
 
 /**
  * Copy:
@@ -20,7 +25,7 @@ interface DeepRecord {
 export const copy: Record<Lang, DeepRecord> = {
   en: {
     common: {
-      brand: "AI Automation",
+      brand: "Lux AI Consultancy & Automation",
       nav: {
         home: "Home",
         services: "Services",
@@ -46,18 +51,18 @@ export const copy: Record<Lang, DeepRecord> = {
         quickLinks: "Quick Links",
         aboutUs: "About Us",
         services: "Services",
-        useCases: "Use Cases",
         howItWorks: "How It Works",
         contactInfo: "Contact Info",
-        email: "mfg@moolasisayjemere.com",
-        emailRaw: "mfg@moolasisayjemere.com",
+        email: "contact@luxaiautomation.com",
+        emailRaw: "contact@luxaiautomation.com",
         phone: "+352 691 833 894",
         phoneRaw: "+352691833894",
-        location: "Belvaux, Luxumbourg",
+        location: "Belvaux, Luxembourg",
         socialTitle: "Connect with us",
         rights: "All rights reserved.",
+        cookies: "Cookie Policy",
         privacy: "Privacy Policy",
-        terms: "Terms of Service",
+        terms: "Terms & Conditions",
       },
     },
 
@@ -182,116 +187,6 @@ export const copy: Record<Lang, DeepRecord> = {
           desc: "High-converting websites plus authenticated portals with chatbots, knowledge bases, and admin-controlled content.",
         },
       },
-      // trusted: {
-      //   title: "Trusted by Teams Transforming Operations with AI Automation",
-      //   subtitle:
-      //     "We design and build AI automation—from chatbots to ERP and custom apps—so your operations run faster, cleaner, and more securely.",
-      //   outcomes:
-      //     "Typical outcomes: less manual work, faster support, cleaner data flow, admin-controlled operations.",
-      // },
-      // capabilities: {
-      //   publicChatbots: {
-      //     name: "Public Website Chatbots",
-      //     desc: "Lead capture + FAQs 24/7",
-      //   },
-      //   protectedChatbots: {
-      //     name: "Protected Chatbots",
-      //     desc: "Authenticated user access",
-      //   },
-      //   adminKb: {
-      //     name: "Admin KB Management",
-      //     desc: "Consistent updates & control",
-      //   },
-      //   erpApps: {
-      //     name: "ERP & Business Web Apps",
-      //     desc: "Back-office + reporting",
-      //   },
-      //   ecommerceInventory: {
-      //     name: "E-commerce & Inventory",
-      //     desc: "Orders + stock management",
-      //   },
-      //   integrationAutomation: {
-      //     name: "System Integration & Automation",
-      //     desc: "APIs, webhooks, n8n/Make/Zapier",
-      //   },
-      // },
-
-      // servicesBlock: {
-      //   title: "Transform Your Business Operations",
-      //   subtitle:
-      //     "From workflow automation to intelligent chatbots, we deliver AI solutions that reduce manual work, improve accuracy, and drive measurable business results.",
-      //   cta: "View All Services",
-      // },
-
-      // services: {
-      //   workflowAutomation: {
-      //     title: "AI Workflow Automation",
-      //     description: "Streamline repetitive tasks and processes",
-      //     detail:
-      //       "We automate time-consuming, rule-based, and repetitive workflows using AI systems that adapt to how your business operates. This reduces human error, speeds up execution, and frees your team to focus on higher-value work.",
-      //     bestFor:
-      //       "Best for: Operations, finance, HR, manufacturing, logistics, back-office teams",
-      //   },
-      //   chatbots: {
-      //     title: "AI-Powered Chatbots",
-      //     description: "Intelligent customer service automation",
-      //     detail:
-      //       "Our AI chatbots handle customer conversations across websites, apps, and messaging platforms. They understand natural language, resolve common issues instantly, and escalate complex cases when needed.",
-      //     bestFor:
-      //       "Best for: Customer support, sales, onboarding, internal IT helpdesks",
-      //   },
-      //   processOptimization: {
-      //     title: "Process Optimization",
-      //     description: "Analyze and improve business workflows",
-      //     detail:
-      //       "We use AI and data analysis to uncover inefficiencies in your existing processes, identify bottlenecks, and recommend smarter, faster ways to operate.",
-      //     bestFor:
-      //       "Best for: Process improvement, operations leadership, cost reduction initiatives",
-      //   },
-      //   predictiveAnalytics: {
-      //     title: "Predictive Analytics",
-      //     description: "Data-driven insights for better decisions",
-      //     detail:
-      //       "We turn your data into actionable forecasts, helping you anticipate trends, reduce risk, and make proactive strategic decisions instead of reactive ones.",
-      //     bestFor:
-      //       "Best for: Executives, planning teams, finance, sales, and supply chain",
-      //   },
-
-      //   // ✅ NEW (requested)
-      //   // digitalSystems: {
-      //   //   title: "Digital Systems & Business Platforms",
-      //   //   description: "Build modern ERP, e-commerce, and custom business apps",
-      //   //   detail:
-      //   //     "We design and build the digital systems that run your business—ERP portals, e-commerce back offices, customer dashboards, and internal tools. We integrate your data, automate workflows, and deliver secure, role-based experiences your team can actually use.",
-      //   //   bestFor:
-      //   //     "Best for: ERP modernization, operational dashboards, order & inventory systems, internal tools, customer portals",
-      //   // },
-      // },
-
-      // // ✅ NEW (requested)
-      // platformsBlock: {
-      //   title: "Platforms We Build & Modernize",
-      //   subtitle:
-      //     "From ERP to e-commerce and internal tools, we create secure, scalable platforms with clean integrations and automation-ready workflows.",
-      // },
-      // platforms: {
-      //   erp: {
-      //     title: "ERP Systems",
-      //     desc: "Modernize operations with role-based modules, reporting, approvals, and clean data flow across teams.",
-      //   },
-      //   customApps: {
-      //     title: "Custom Business Apps",
-      //     desc: "Tailored portals and internal tools to fit your workflow—built fast, secure, and easy to maintain.",
-      //   },
-      //   ecommerce: {
-      //     title: "E-commerce Platforms",
-      //     desc: "Order processing, inventory sync, fulfillment automation, and customer self-service with AI support.",
-      //   },
-      //   websites: {
-      //     title: "Websites & Customer Portals",
-      //     desc: "High-converting sites plus authenticated portals—chatbots, knowledge base, and admin-controlled content.",
-      //   },
-      // },
 
       teamBlock: {
         title: "Meet Our Team",
@@ -300,37 +195,22 @@ export const copy: Record<Lang, DeepRecord> = {
       },
       team: {
         molla: {
-          name: "Molla Sisay",
-          role: "AI Automation Strategist",
+          name: "Molla Sisay Jemere",
+          role: "CEO & Founder · Full-Stack & AI Automation Strategist",
           quote:
-            "I help businesses simplify complex processes and design automation systems that enhance efficiency and reduce bottlenecks.",
-          tags: {
-            tag1: "Process Automation",
-            tag2: "Workflow Design",
-            tag3: "System Analysis",
-          },
+            "Leads the company’s vision and strategy, focusing on simplifying complex business processes through intelligent automation and scalable AI-driven systems that improve efficiency and reduce operational bottlenecks.",
         },
         fikre: {
           name: "Fikremariam Mekonnen",
-          role: "AI & Integrations Engineer",
+          role: "Co-Founder · Full-Stack, AI & Integrations Engineer",
           quote:
-            "I specialize in building scalable integrations and automation systems that work reliably in real business environments.",
-          tags: {
-            tag1: "API Integrations",
-            tag2: "Automation Engineering",
-            tag3: "AI Systems",
-          },
+            "Specializes in designing and building robust system integrations and automation architectures that operate reliably in real-world business environments and scale with organizational growth.",
         },
         dereje: {
           name: "Dereje Masresha",
-          role: "Full-Stack & AI Solutions Developer",
+          role: "AWS Cloud Enthusiast · Full-Stack & AI Solutions Developer",
           quote:
-            "My work focuses on building intelligent automation tools and seamless user experiences powered by AI.",
-          tags: {
-            tag1: "Full-Stack Dev",
-            tag2: "AI Chatbots",
-            tag3: "Automation Platforms",
-          },
+            "Builds full-stack solutions that integrate clean user interfaces, scalable cloud-backed systems, and practical AI automation to deliver reliable, user-focused applications.",
         },
       },
       testimonialsBlock: {
@@ -368,9 +248,12 @@ export const copy: Record<Lang, DeepRecord> = {
 
     contact: {
       modal: {
-        title: "Not Implemented",
-        body: "This is a template. Backend functionality is not implemented.",
+        title: "Message sent",
+        body: "Thanks! We received your message and will reply within 1–2 business days.",
         close: "Close",
+        errorTitle: "Could not send",
+        errorBody:
+          "Sorry — something went wrong while sending your message. Please email us at contact@luxaiautomation.com.",
       },
       hero: {
         title: "Let's Automate Something Together",
@@ -381,6 +264,10 @@ export const copy: Record<Lang, DeepRecord> = {
         title: "Get Started with AI Automation",
         fullName: "Full Name *",
         email: "Email Address *",
+        confirmEmail: "Confirm Email Address *",
+        phone: "Phone Number *",
+        phoneHint:
+          "Select your country code and enter a reachable phone number.",
         company: "Company Name *",
         task: "Task to Automate *",
         sending: "Sending...",
@@ -388,10 +275,19 @@ export const copy: Record<Lang, DeepRecord> = {
         placeholders: {
           name: "John Doe",
           email: "john@company.com",
+          confirmEmail: "john@company.com",
+          phone: "+352 691 833 894",
           company: "Your Company Inc.",
           task: "Describe the process you'd like to automate (e.g., invoice processing, customer support, data entry, etc.)",
         },
+        errors: {
+          emailMismatch: "Email addresses do not match.",
+          phoneRequired: "Phone number is required.",
+          phoneInvalid:
+            "Please enter a valid phone number (include country code).",
+        },
       },
+
       sidebar: { title: "Get in Touch" },
       whyTitle: "Why Choose Us?",
       why: {
@@ -404,48 +300,25 @@ export const copy: Record<Lang, DeepRecord> = {
         email: {
           icon: "ri-mail-line",
           title: "Email Us",
-          content: "mfg@moolasisayjemere.com",
-          description: "Get in touch for project inquiries",
+          content: "contact@luxaiautomation.com",
+          // content: "derejemasresha27@gmail.com",
+          description: "Project inquiries & consultations",
         },
         phone: {
           icon: "ri-phone-line",
           title: "Call Us",
           content: "+352 691 833 894",
-          description: "Mon-Fri 9AM-6PM PST",
+          description: "Mon–Fri · 8:00–18:00 (Luxembourg time)",
         },
         visit: {
           icon: "ri-map-pin-line",
-          title: "Visit Us",
-          content: "San Francisco, CA",
-          description: "Schedule an in-person meeting",
-        },
-      },
-      testimonialsBlock: {
-        title: "What Our Clients Say",
-        subtitle:
-          "Real results from businesses that transformed with AI automation",
-      },
-      testimonials: {
-        t1: {
-          quote:
-            "AI automation reduced our invoice processing time by 70% and eliminated errors completely. The ROI was visible within the first month.",
-          author: "Sarah Johnson",
-          role: "Operations Manager",
-        },
-        t2: {
-          quote:
-            "The chatbot handles 90% of our customer inquiries automatically. Our team can now focus on strategic initiatives instead of repetitive tasks.",
-          author: "Michael Chen",
-          role: "CEO",
-        },
-        t3: {
-          quote:
-            "Predictive analytics helped us identify market trends 3 months early. This gave us a competitive advantage that increased revenue by 25%.",
-          author: "Emily Rodriguez",
-          role: "VP of Operations",
+          title: "Based In",
+          content: "Luxembourg (EU)",
+          description: "Remote-first · meetings by appointment",
         },
       },
     },
+
     about: {
       hero: {
         title: "About Our Mission",
@@ -845,22 +718,75 @@ export const copy: Record<Lang, DeepRecord> = {
     },
 
     legal: {
+      cookies: {
+        title: "Cookie Policy",
+        meta: {
+          effectiveDate: "Effective date: December 22, 2025",
+          company: "Lux AI Consultancy & Automation",
+          domain: "luxaiautomation.com",
+          downloadPdf: "Download PDF",
+        },
+        sections: [
+          {
+            title: "1. Overview",
+            body: "This Cookie Policy explains how Lux AI Consultancy & Automation uses cookies and similar technologies on its website. We use cookies in a limited and transparent way, focused on usability and respecting user choice.",
+          },
+          {
+            title: "2. What Are Cookies?",
+            body: "Cookies are small text files stored on your device when you visit a website. They help remember settings such as language or appearance. Cookies do not provide access to your device, personal files, or contacts.",
+          },
+          {
+            title: "3. How We Use Cookies",
+            body: "We use cookies only to remember preferences you choose, such as your selected language and visual theme (light or dark mode). The website remains fully usable even if you reject preference cookies. In that case, your settings may apply only for the current session and will not be saved for future visits.",
+          },
+          {
+            title: "4. Cookie Categories",
+            bodyList: [
+              "Necessary cookies support basic website operation, such as correct display, navigation, and stability. They do not store your personal preferences by default and are not used for tracking.",
+              "Preference cookies remember choices you make, such as language and appearance. These cookies are optional and are stored only if you explicitly accept them.",
+            ],
+          },
+          {
+            title: "5. Technical Operation and Stability",
+            body: "Limited technical processing may occur to ensure website stability, security, and protection against misuse. This is part of normal infrastructure operation and is not used for advertising, analytics, or profiling.",
+          },
+          {
+            title: "6. Managing Your Preferences",
+            body: "When you first visit the website, you can accept or reject preference cookies. If you accept, your preferences may be saved for future visits. If you reject, the website continues to function normally, but preferences are not stored. You can also manage or delete cookies at any time through your browser settings.",
+          },
+          {
+            title: "7. Third-Party Websites",
+            body: "This website may contain links to third-party websites that operate independently and may use their own cookies. Lux AI Consultancy & Automation is not responsible for third-party cookie practices.",
+          },
+          {
+            title: "8. Updates to This Policy",
+            body: "We may update this Cookie Policy from time to time to reflect changes in website functionality or legal requirements. Any updates will be published on this page with a revised effective date.",
+          },
+          {
+            title: "9. Contact",
+            body: "If you have any questions about this Cookie Policy, please contact us at contact@luxaiautomation.com.",
+          },
+        ],
+        footer:
+          "Cookies help the website remember your preferences and operate smoothly. The website remains usable even if cookies are disabled.",
+      },
+
       privacy: {
         title: "Privacy Policy",
         sections: {
           metaDate: "Effective date: December 22, 2025",
-          metaCompany: "Lux AI Consultation & Automation",
+          metaCompany: "Lux AI Consultancy & Automation",
           metaDomain: "luxaiautomation.com",
           downloadPdf: "Download PDF",
           contactLabel: "Email:",
           emailCta: "Email us",
 
           s1t: "1. Introduction",
-          s1b: "Lux AI Consultation & Automation, based in Luxembourg (EU), values your privacy. This Privacy Policy explains how we handle your information when you use our website. We are committed to protecting your personal data in accordance with the General Data Protection Regulation (GDPR).",
+          s1b: "Lux AI Consultancy & Automation, based in Luxembourg (EU), values your privacy. This Privacy Policy explains how we handle your information when you use our website. We are committed to protecting your personal data in accordance with the General Data Protection Regulation (GDPR).",
 
           s2t: "2. Information We Collect",
           s2b1: "We collect personal information only when you contact us directly. If you use our contact form, we may collect your name, email address, and the content of your message. This information is used solely to respond to your inquiry and is never sold or shared with third parties.",
-          s2b2: "We do not use analytics, tracking, or advertising cookies. Only essential cookies are used to ensure basic site functionality, such as remembering your theme preference (light or dark mode).",
+          s2b2: "We do not use analytics, tracking, or advertising cookies. We use necessary cookies for core operation, and optional preference cookies (theme/language) only if you accept them.",
 
           s3t: "3. How We Use Your Information",
           s3b: "Any information you provide is used exclusively to respond to your inquiry or request. We do not use your data for marketing purposes and do not share it with third parties.",
@@ -872,7 +798,7 @@ export const copy: Record<Lang, DeepRecord> = {
           s5b: "We implement reasonable technical and organizational measures to protect your personal data from unauthorized access, loss, or misuse. However, no method of data transmission or storage is completely secure.",
 
           s6t: "6. Third-Party Links",
-          s6b: "Our website may include links to third-party websites. LuxAI Automation is not responsible for the privacy practices or content of those external sites. We encourage you to review their privacy policies before providing any personal data.",
+          s6b: "Our website may include links to third-party websites. Lux AI Consultancy & Automation is not responsible for the privacy practices or content of those external sites. We encourage you to review their privacy policies before providing any personal data.",
 
           s7t: "7. Changes to This Policy",
           s7b: "We may update this Privacy Policy from time to time. Any changes will be posted on this page with a revised effective date. Continued use of the website indicates acceptance of the updated policy.",
@@ -917,7 +843,7 @@ export const copy: Record<Lang, DeepRecord> = {
           s8b: "This website may contain links to third-party websites. These links are provided for convenience only. Lux AI Consultancy & Automation does not control and is not responsible for the content, policies, or practices of any third-party sites.",
 
           s9t: "9. Feedback and Submissions",
-          s9b: "Any feedback, ideas, or suggestions you submit to LuxAI Automation through this website will be treated as non-confidential and may be used by Lux AI Consultancy & Automation without restriction or compensation.",
+          s9b: "Any feedback, ideas, or suggestions you submit to Lux AI Consultancy & Automation through this website will be treated as non-confidential and may be used by Lux AI Consultancy & Automation without restriction or compensation.",
 
           s10t: "10. Changes to These Terms",
           s10b: "Lux AI Consultancy & Automation reserves the right to update or modify these Terms & Conditions at any time. Changes take effect immediately upon posting. Continued use of the website constitutes acceptance of the revised terms.",
@@ -936,7 +862,7 @@ export const copy: Record<Lang, DeepRecord> = {
 
   fr: {
     common: {
-      brand: "AI Automation",
+      brand: "Lux AI Consultancy & Automation",
       nav: {
         home: "Accueil",
         services: "Services",
@@ -965,13 +891,14 @@ export const copy: Record<Lang, DeepRecord> = {
         useCases: "Cas d’usage",
         howItWorks: "Comment ça marche",
         contactInfo: "Contact",
-        email: "mfg@moolasisayjemere.com",
-        emailRaw: "mfg@moolasisayjemere.com",
+        email: "contact@luxaiautomation.com",
+        emailRaw: "contact@luxaiautomation.com",
         phone: "+352 691 833 894",
         phoneRaw: "+352691833894",
-        location: "Belvaux, Luxumbourg",
+        location: "Belvaux, Luxembourg",
         socialTitle: "Connectez-vous avec nous",
         rights: "Tous droits réservés.",
+        cookies: "Politique de cookies",
         privacy: "Politique de confidentialité",
         terms: "Conditions d’utilisation",
       },
@@ -1102,119 +1029,6 @@ export const copy: Record<Lang, DeepRecord> = {
         },
       },
 
-      // trusted: {
-      //   title:
-      //     "Adopté par des équipes qui transforment leurs opérations grâce à l’automatisation par l’IA",
-      //   subtitle:
-      //     "Nous concevons et développons des solutions d’automatisation par l’IA — des chatbots aux ERP et aux applications sur mesure — afin que vos opérations soient plus rapides, plus efficaces et plus sécurisées.",
-      //   outcomes:
-      //     "Résultats typiques : moins de travail manuel, support plus rapide, flux de données plus propre, opérations contrôlées par l’administrateur.",
-      // },
-      // capabilities: {
-      //   publicChatbots: {
-      //     name: "Chatbots pour sites publics",
-      //     desc: "Génération de leads + FAQ 24/7",
-      //   },
-      //   protectedChatbots: {
-      //     name: "Chatbots sécurisés",
-      //     desc: "Accès utilisateurs authentifié",
-      //   },
-      //   adminKb: {
-      //     name: "Gestion de base de connaissances (admin)",
-      //     desc: "Mises à jour et contrôle cohérents",
-      //   },
-      //   erpApps: {
-      //     name: "ERP & applications métiers web",
-      //     desc: "Back-office + reporting",
-      //   },
-      //   ecommerceInventory: {
-      //     name: "E-commerce & stock",
-      //     desc: "Commandes + gestion d’inventaire",
-      //   },
-      //   integrationAutomation: {
-      //     name: "Intégration & automatisation",
-      //     desc: "API, webhooks, n8n/Make/Zapier",
-      //   },
-      // },
-
-      // servicesBlock: {
-      //   title: "Transformez vos opérations",
-      //   subtitle:
-      //     "De l’automatisation des flux de travail aux chatbots intelligents, nous proposons des solutions d’IA qui réduisent le travail manuel, améliorent la précision et génèrent des résultats commerciaux mesurables.",
-      //   cta: "Voir tous les services",
-      // },
-
-      // services: {
-      //   workflowAutomation: {
-      //     title: "Automatisation des workflows par IA",
-      //     description: "Rationalisez les tâches et processus répétitifs",
-      //     detail:
-      //       "Nous automatisons les workflows répétitifs et basés sur des règles avec des systèmes IA adaptés à votre fonctionnement. Cela réduit les erreurs, accélère l’exécution et libère vos équipes pour des tâches à plus forte valeur.",
-      //     bestFor:
-      //       "Idéal pour : opérations, finance, RH, industrie, logistique, équipes back-office",
-      //   },
-      //   chatbots: {
-      //     title: "Chatbots alimentés par l’IA",
-      //     description: "Automatisation intelligente du service client",
-      //     detail:
-      //       "Nos chatbots IA gèrent les conversations sur sites web, applications et messageries. Ils comprennent le langage naturel, résolvent les demandes courantes instantanément et escaladent les cas complexes.",
-      //     bestFor:
-      //       "Idéal pour : support client, ventes, onboarding, assistance IT interne",
-      //   },
-      //   processOptimization: {
-      //     title: "Optimisation des processus",
-      //     description: "Analysez et améliorez vos workflows",
-      //     detail:
-      //       "Nous utilisons l’IA et l’analyse de données pour détecter les inefficacités, identifier les goulots d’étranglement et recommander des façons plus rapides et plus intelligentes d’opérer.",
-      //     bestFor:
-      //       "Idéal pour : amélioration continue, direction des opérations, réduction des coûts",
-      //   },
-      //   predictiveAnalytics: {
-      //     title: "Analytique prédictive",
-      //     description: "Des insights data pour de meilleures décisions",
-      //     detail:
-      //       "Nous transformons vos données en prévisions actionnables pour anticiper les tendances, réduire les risques et prendre des décisions proactives.",
-      //     bestFor:
-      //       "Idéal pour : dirigeants, planification, finance, ventes, supply chain",
-      //   },
-
-      //   // ✅ NEW (requested)
-      //   // digitalSystems: {
-      //   //   title: "Systèmes digitaux & plateformes métiers",
-      //   //   description:
-      //   //     "Construire des ERP modernes, du e-commerce et des applications métiers sur mesure",
-      //   //   detail:
-      //   //     "Nous concevons et développons les systèmes qui font tourner votre entreprise : portails ERP, back offices e-commerce, dashboards clients et outils internes. Nous intégrons vos données, automatisons les workflows et livrons des expériences sécurisées avec gestion des rôles.",
-      //   //   bestFor:
-      //   //     "Idéal pour : modernisation ERP, dashboards opérationnels, commandes & stock, outils internes, portails clients",
-      //   // },
-      // },
-
-      // // ✅ NEW (requested)
-      // platformsBlock: {
-      //   title: "Plateformes que nous construisons et modernisons",
-      //   subtitle:
-      //     "De l’ERP au e-commerce et aux outils internes, nous créons des plateformes sécurisées, évolutives et prêtes pour l’automatisation.",
-      // },
-      // platforms: {
-      //   erp: {
-      //     title: "Systèmes ERP",
-      //     desc: "Modernisez vos opérations : modules par rôles, reporting, validations et circulation propre des données.",
-      //   },
-      //   customApps: {
-      //     title: "Applications métiers sur mesure",
-      //     desc: "Portails et outils internes adaptés à vos processus—rapides, sécurisés et faciles à maintenir.",
-      //   },
-      //   ecommerce: {
-      //     title: "Plateformes e-commerce",
-      //     desc: "Traitement des commandes, synchronisation du stock, automatisation de la logistique et self-service client.",
-      //   },
-      //   websites: {
-      //     title: "Sites web & portails clients",
-      //     desc: "Sites performants + portails authentifiés : chatbots, base de connaissances et contenus contrôlés par admin.",
-      //   },
-      // },
-
       teamBlock: {
         title: "Rencontrez notre équipe",
         subtitle:
@@ -1222,7 +1036,7 @@ export const copy: Record<Lang, DeepRecord> = {
       },
       team: {
         molla: {
-          name: "Molla Sisay",
+          name: "Molla Sisay Jemere",
           role: "Stratège en automatisation IA",
           quote:
             "J’aide les entreprises à simplifier des processus complexes et à concevoir des systèmes d’automatisation qui améliorent l’efficacité et réduisent les goulots d’étranglement.",
@@ -1243,16 +1057,12 @@ export const copy: Record<Lang, DeepRecord> = {
             tag3: "Systèmes IA",
           },
         },
+
         dereje: {
           name: "Dereje Masresha",
-          role: "Développeur full-stack & solutions IA",
+          role: "Passionné du cloud AWS · Développeur full-stack & solutions IA",
           quote:
-            "Je développe des outils d’automatisation intelligents et des expériences utilisateur fluides, propulsés par l’IA.",
-          tags: {
-            tag1: "Dév. full-stack",
-            tag2: "Chatbots IA",
-            tag3: "Plateformes d’automatisation",
-          },
+            "Conçoit des solutions full-stack intégrant des interfaces utilisateur soignées, des systèmes cloud évolutifs et une automatisation IA pragmatique afin de fournir des applications fiables et centrées sur l’utilisateur.",
         },
       },
       testimonialsBlock: {
@@ -1290,80 +1100,69 @@ export const copy: Record<Lang, DeepRecord> = {
 
     contact: {
       modal: {
-        title: "Non implémenté",
-        body: "Ceci est un modèle. La fonctionnalité backend n’est pas implémentée.",
+        title: "Message envoyé",
+        body: "Merci ! Nous avons bien reçu votre message et vous répondrons sous 1 à 2 jours ouvrables.",
         close: "Fermer",
+        errorTitle: "Envoi impossible",
+        errorBody:
+          "Désolé — une erreur est survenue lors de l’envoi de votre message. Veuillez nous écrire à contact@luxaiautomation.com.",
       },
       hero: {
         title: "Automatisons quelque chose ensemble",
         subtitle:
-          "Prêt à transformer votre entreprise avec l’automatisation IA ? Décrivez vos défis et nous créerons une solution sur mesure.",
+          "Prêt à transformer votre entreprise grâce à l’automatisation par l’IA ? Parlez-nous de vos défis et nous créerons une solution sur mesure.",
       },
       form: {
-        title: "Démarrer avec l’automatisation IA",
+        title: "Commencez avec l’automatisation par l’IA",
         fullName: "Nom complet *",
         email: "Adresse e-mail *",
+        confirmEmail: "Confirmer l’adresse e-mail *",
+        phone: "Numéro de téléphone *",
+        phoneHint:
+          "Sélectionnez votre indicatif pays et entrez un numéro joignable.",
         company: "Nom de l’entreprise *",
         task: "Tâche à automatiser *",
-        sending: "Envoi...",
+        sending: "Envoi en cours...",
         submit: "Obtenir une consultation gratuite",
         placeholders: {
           name: "Jean Dupont",
           email: "jean@entreprise.com",
-          company: "Votre Entreprise SAS",
-          task: "Décrivez le processus à automatiser (ex. traitement des factures, support client, saisie de données, etc.)",
+          confirmEmail: "jean@entreprise.com",
+          phone: "+33 6 12 34 56 78",
+          company: "Votre entreprise",
+          task: "Décrivez le processus que vous souhaitez automatiser (facturation, support client, saisie de données, etc.)",
+        },
+        errors: {
+          emailMismatch: "Les adresses e-mail ne correspondent pas.",
+          phoneRequired: "Le numéro de téléphone est obligatoire.",
+          phoneInvalid:
+            "Veuillez saisir un numéro de téléphone valide (avec indicatif pays).",
         },
       },
-      sidebar: { title: "Nous contacter" },
+
+      sidebar: { title: "Contactez-nous" },
       whyTitle: "Pourquoi nous choisir ?",
       why: {
         i1: "Consultation initiale gratuite",
-        i2: "Solutions sur mesure",
-        i3: "Support continu 24/7",
-        i4: "Résultats prouvés",
+        i2: "Solutions personnalisées",
+        i3: "Support continu 24h/24 et 7j/7",
+        i4: "Expérience éprouvée",
       },
       info: {
         email: {
-          icon: "ri-mail-line",
-          title: "Écrivez-nous",
-          content: "mfg@moolasisayjemere.com",
-          description: "Pour toute demande de projet",
+          title: "Envoyez-nous un e-mail",
+          content: "contact@luxaiautomation.com",
+          description: "Demandes de projets et consultations",
         },
         phone: {
-          icon: "ri-phone-line",
           title: "Appelez-nous",
           content: "+352 691 833 894",
-          description: "Lun-Ven 9h-18h (PST)",
+          description: "Lun–Ven · 8h00–18h00 (heure du Luxembourg)",
         },
         visit: {
-          icon: "ri-map-pin-line",
-          title: "Rendez-nous visite",
-          content: "San Francisco, CA",
-          description: "Planifiez une rencontre",
-        },
-      },
-      testimonialsBlock: {
-        title: "Ce que disent nos clients",
-        subtitle: "Des résultats concrets grâce à l’automatisation IA",
-      },
-      testimonials: {
-        t1: {
-          quote:
-            "L’automatisation IA a réduit de 70 % notre temps de traitement des factures et a éliminé les erreurs. Le ROI a été visible dès le premier mois.",
-          author: "Sarah Johnson",
-          role: "Responsable des opérations",
-        },
-        t2: {
-          quote:
-            "Le chatbot traite automatiquement 90 % des demandes clients. L’équipe peut enfin se concentrer sur des initiatives stratégiques.",
-          author: "Michael Chen",
-          role: "CEO",
-        },
-        t3: {
-          quote:
-            "L’analytique prédictive nous a permis d’identifier des tendances 3 mois en avance, augmentant le chiffre d’affaires de 25 %.",
-          author: "Emily Rodriguez",
-          role: "VP Opérations",
+          title: "Basés au",
+          content: "Luxembourg (UE)",
+          description: "Télétravail prioritaire · rendez-vous sur demande",
         },
       },
     },
@@ -1397,31 +1196,32 @@ export const copy: Record<Lang, DeepRecord> = {
           "D’une petite startup à une agence leader en automatisation IA : voici notre évolution.",
       },
       timeline: {
-        "2020": {
-          title: "Création de l’entreprise",
-          description: "Une vision : démocratiser l’automatisation IA",
-        },
-        "2021": {
-          title: "Premier grand client",
+        foundation: {
+          label: "Phase 1",
+          title: "Fondée avec une mission claire",
           description:
-            "Automatisation réussie du traitement des factures pour une entreprise du Fortune 500",
+            "Nous avons lancé Lux AI Consultancy & Automation pour aider les entreprises à mettre en œuvre l’IA de manière pratique et mesurable.",
         },
-        "2022": {
-          title: "Lancement du chatbot IA",
+        research: {
+          label: "Phase 2",
+          title: "Recherche et architecture",
           description:
-            "Lancement de notre plateforme de chatbot alimentée par l’IA",
+            "Nous nous sommes concentrés sur l’analyse des besoins réels en automatisation des entreprises et sur la conception d’architectures évolutives utilisant l’IA, les intégrations et l’automatisation des flux de travail.",
         },
-        "2023": {
-          title: "Analytique prédictive",
+        building: {
+          label: "Maintenant",
+          title: "Développement des systèmes principaux",
           description:
-            "Introduction de capacités avancées d’analytique prédictive",
+            "Nous développons des frameworks d’automatisation réutilisables, des systèmes de connaissances basés sur l’IA et des contrôles d’administration pour soutenir des déploiements sécurisés.",
         },
-        "2024": {
-          title: "Expansion internationale",
+        next: {
+          label: "Prochaine étape",
+          title: "Accès anticipé et déploiements clients",
           description:
-            "Déploiement de services pour accompagner des entreprises partout dans le monde",
+            "Nous préparons des engagements en accès anticipé et l’intégration de nos premiers clients avec un périmètre clair, une gouvernance définie et des objectifs de ROI mesurables.",
         },
       },
+
       cta: {
         title: "Prêt à transformer votre entreprise ?",
         subtitle:
@@ -1713,22 +1513,75 @@ export const copy: Record<Lang, DeepRecord> = {
     },
 
     legal: {
+      cookies: {
+        title: "Politique relative aux cookies",
+        meta: {
+          effectiveDate: "Date d’entrée en vigueur : 22 décembre 2025",
+          company: "Lux AI Consultancy & Automation",
+          domain: "luxaiautomation.com",
+          downloadPdf: "Télécharger le PDF",
+        },
+        sections: [
+          {
+            title: "1. Présentation",
+            body: "Cette politique relative aux cookies explique comment Lux AI Consultancy & Automation utilise des cookies et des technologies similaires sur son site web. Les cookies sont utilisés de manière limitée et transparente, dans un souci de convivialité et de respect du choix des utilisateurs.",
+          },
+          {
+            title: "2. Que sont les cookies ?",
+            body: "Les cookies sont de petits fichiers texte stockés sur votre appareil lorsque vous visitez un site web. Ils permettent de mémoriser certains réglages tels que la langue ou l’apparence. Les cookies ne donnent pas accès à votre appareil, à vos fichiers personnels ou à vos contacts.",
+          },
+          {
+            title: "3. Utilisation des cookies",
+            body: "Nous utilisons les cookies uniquement pour mémoriser les préférences que vous choisissez, telles que la langue sélectionnée et le thème visuel (clair ou sombre). Le site reste entièrement utilisable même si vous refusez les cookies de préférence. Dans ce cas, vos réglages s’appliquent uniquement à la session en cours et ne sont pas enregistrés pour les visites futures.",
+          },
+          {
+            title: "4. Catégories de cookies",
+            bodyList: [
+              "Les cookies nécessaires assurent le fonctionnement de base du site, notamment l’affichage correct, la navigation et la stabilité. Ils ne stockent pas vos préférences personnelles par défaut et ne sont pas utilisés à des fins de suivi.",
+              "Les cookies de préférence mémorisent les choix que vous effectuez, comme la langue et l’apparence. Ces cookies sont facultatifs et ne sont enregistrés que si vous les acceptez explicitement.",
+            ],
+          },
+          {
+            title: "5. Fonctionnement technique et stabilité",
+            body: "Un traitement technique limité peut être effectué afin d’assurer la stabilité du site, la sécurité et la protection contre les abus. Cela fait partie du fonctionnement normal de l’infrastructure et n’est pas utilisé à des fins publicitaires, analytiques ou de profilage.",
+          },
+          {
+            title: "6. Gestion de vos préférences",
+            body: "Lors de votre première visite, vous pouvez accepter ou refuser les cookies de préférence. En cas d’acceptation, vos préférences peuvent être enregistrées pour vos prochaines visites. En cas de refus, le site fonctionne normalement, mais les préférences ne sont pas conservées. Vous pouvez également gérer ou supprimer les cookies à tout moment via les paramètres de votre navigateur.",
+          },
+          {
+            title: "7. Sites tiers",
+            body: "Ce site peut contenir des liens vers des sites tiers qui fonctionnent indépendamment et peuvent utiliser leurs propres cookies. Lux AI Consultancy & Automation n’est pas responsable des pratiques de cookies de ces sites tiers.",
+          },
+          {
+            title: "8. Modifications de cette politique",
+            body: "Cette politique relative aux cookies peut être mise à jour afin de refléter des évolutions du site ou des exigences légales. Toute modification sera publiée sur cette page avec une date d’entrée en vigueur mise à jour.",
+          },
+          {
+            title: "9. Contact",
+            body: "Pour toute question concernant cette politique relative aux cookies, veuillez nous contacter à l’adresse contact@luxaiautomation.com.",
+          },
+        ],
+        footer:
+          "Les cookies aident le site à mémoriser vos préférences et à fonctionner correctement. Le site reste utilisable même si les cookies sont désactivés.",
+      },
+
       privacy: {
         title: "Politique de confidentialité",
         sections: {
           metaDate: "Date d’entrée en vigueur : 22 décembre 2025",
-          metaCompany: "Lux AI Consultation & Automation",
+          metaCompany: "Lux AI Consultancy & Automation",
           metaDomain: "luxaiautomation.com",
           downloadPdf: "Télécharger le PDF",
           contactLabel: "Email :",
           emailCta: "Nous contacter par email",
 
           s1t: "1. Introduction",
-          s1b: "Lux AI Consultation & Automation, basée au Luxembourg (UE), accorde une grande importance à votre vie privée. Cette Politique de confidentialité explique comment nous traitons vos informations lorsque vous utilisez notre site web. Nous nous engageons à protéger vos données personnelles conformément au Règlement Général sur la Protection des Données (RGPD).",
+          s1b: "Lux AI Consultancy & Automation, basée au Luxembourg (UE), accorde une grande importance à votre vie privée. Cette Politique de confidentialité explique comment nous traitons vos informations lorsque vous utilisez notre site web. Nous nous engageons à protéger vos données personnelles conformément au Règlement Général sur la Protection des Données (RGPD).",
 
           s2t: "2. Informations que nous collectons",
           s2b1: "Nous collectons des informations personnelles uniquement lorsque vous nous contactez directement. Si vous utilisez notre formulaire de contact, nous pouvons collecter votre nom, votre adresse e-mail et le contenu de votre message. Ces informations sont utilisées exclusivement pour répondre à votre demande et ne sont jamais vendues ni partagées avec des tiers.",
-          s2b2: "Nous n’utilisons pas de cookies d’analyse, de suivi ou de publicité. Seuls des cookies essentiels sont utilisés afin d’assurer le bon fonctionnement du site, comme la mémorisation de votre préférence de thème (clair ou sombre).",
+          s2b2: "Nous n’utilisons pas de cookies d’analyse, de suivi ou de publicité. Nous utilisons uniquement des cookies strictement nécessaires au fonctionnement du site, ainsi que des cookies de préférence (thème/langue) uniquement si vous les acceptez.",
 
           s3t: "3. Utilisation de vos informations",
           s3b: "Toute information que vous fournissez est utilisée exclusivement pour répondre à votre demande ou requête. Nous n’utilisons pas vos données à des fins marketing et ne les partageons pas avec des tiers.",
@@ -1740,7 +1593,7 @@ export const copy: Record<Lang, DeepRecord> = {
           s5b: "Nous mettons en œuvre des mesures techniques et organisationnelles raisonnables afin de protéger vos données personnelles contre tout accès non autorisé, perte ou utilisation abusive. Toutefois, aucune méthode de transmission ou de stockage des données n’est totalement sécurisée.",
 
           s6t: "6. Liens vers des sites tiers",
-          s6b: "Notre site web peut contenir des liens vers des sites web tiers. LuxAI Automation n’est pas responsable des pratiques de confidentialité ni du contenu de ces sites externes. Nous vous encourageons à consulter leurs politiques de confidentialité avant de fournir des données personnelles.",
+          s6b: "Notre site web peut contenir des liens vers des sites web tiers. Lux AI Consultancy & Automation n’est pas responsable des pratiques de confidentialité ni du contenu de ces sites externes. Nous vous encourageons à consulter leurs politiques de confidentialité avant de fournir des données personnelles.",
 
           s7t: "7. Modifications de cette politique",
           s7b: "Nous pouvons mettre à jour cette Politique de confidentialité de temps à autre. Toute modification sera publiée sur cette page avec une date d’entrée en vigueur révisée. La poursuite de l’utilisation du site vaut acceptation de la politique mise à jour.",
@@ -1784,7 +1637,7 @@ export const copy: Record<Lang, DeepRecord> = {
           s8b: "Ce site web peut contenir des liens vers des sites web tiers. Ces liens sont fournis uniquement à titre de commodité. Lux AI Consultancy & Automation n’exerce aucun contrôle et n’est pas responsable du contenu, des politiques ou des pratiques de ces sites tiers.",
 
           s9t: "9. Commentaires et soumissions",
-          s9b: "Tout commentaire, idée ou suggestion que vous soumettez à LuxAI Automation via ce site web sera traité comme non confidentiel et pourra être utilisé par Lux AI Consultancy & Automation sans restriction ni compensation.",
+          s9b: "Tout commentaire, idée ou suggestion que vous soumettez à Lux AI Consultancy & Automation via ce site web sera traité comme non confidentiel et pourra être utilisé par Lux AI Consultancy & Automation sans restriction ni compensation.",
 
           s10t: "10. Modifications des présentes conditions",
           s10b: "Lux AI Consultancy & Automation se réserve le droit de mettre à jour ou de modifier les présentes Conditions générales à tout moment. Les modifications prennent effet dès leur publication. L’utilisation continue du site web vaut acceptation des conditions révisées.",
@@ -1803,7 +1656,7 @@ export const copy: Record<Lang, DeepRecord> = {
 
   de: {
     common: {
-      brand: "AI Automation",
+      brand: "Lux AI Consultancy & Automation",
       nav: {
         home: "Start",
         services: "Services",
@@ -1818,7 +1671,7 @@ export const copy: Record<Lang, DeepRecord> = {
         close: "Schließen",
         getStarted: "Loslegen",
         viewServices: "Services ansehen",
-        getFreeAudit: "Kostenlosen Audit erhalten",
+        getFreeAudit: "Kostenlosen Automatisierungs-Audit",
         getFreeConsultation: "Kostenlose Beratung",
       },
       footer: {
@@ -1832,13 +1685,14 @@ export const copy: Record<Lang, DeepRecord> = {
         useCases: "Anwendungsfälle",
         howItWorks: "So funktioniert’s",
         contactInfo: "Kontakt",
-        email: "mfg@moolasisayjemere.com",
-        emailRaw: "mfg@moolasisayjemere.com",
+        email: "contact@luxaiautomation.com",
+        emailRaw: "contact@luxaiautomation.com",
         phone: "+352 691 833 894",
         phoneRaw: "+352691833894",
-        location: "Belvaux, Luxumbourg",
+        location: "Belvaux, Luxemburg",
         socialTitle: "Verbinden Sie sich mit uns",
         rights: "Alle Rechte vorbehalten.",
+        cookies: "Cookie-Richtlinie",
         privacy: "Datenschutzerklärung",
         terms: "Nutzungsbedingungen",
       },
@@ -1966,118 +1820,6 @@ export const copy: Record<Lang, DeepRecord> = {
         },
       },
 
-      // trusted: {
-      //   title:
-      //     "Vertrauenswürdig für Teams, die ihre Abläufe mit KI-Automatisierung transformieren",
-      //   subtitle:
-      //     "Wir konzipieren und entwickeln KI-Automatisierung — von Chatbots bis hin zu ERP-Systemen und individuellen Anwendungen — damit Ihre Abläufe schneller, effizienter und sicherer funktionieren.",
-      //   outcomes:
-      //     "Typische Ergebnisse: weniger manuelle Arbeit, schnellerer Support, sauberere Datenflüsse, admin-kontrollierte Abläufe.",
-      // },
-      // capabilities: {
-      //   publicChatbots: {
-      //     name: "Website-Chatbots (öffentlich)",
-      //     desc: "Lead-Erfassung + FAQs 24/7",
-      //   },
-      //   protectedChatbots: {
-      //     name: "Geschützte Chatbots",
-      //     desc: "Authentifizierter Benutzerzugang",
-      //   },
-      //   adminKb: {
-      //     name: "Admin-KB-Management",
-      //     desc: "Konsistente Updates & Kontrolle",
-      //   },
-      //   erpApps: {
-      //     name: "ERP & Business-Web-Apps",
-      //     desc: "Backoffice + Reporting",
-      //   },
-      //   ecommerceInventory: {
-      //     name: "E-Commerce & Lager",
-      //     desc: "Bestellungen + Bestandsverwaltung",
-      //   },
-      //   integrationAutomation: {
-      //     name: "Integration & Automatisierung",
-      //     desc: "APIs, Webhooks, n8n/Make/Zapier",
-      //   },
-      // },
-
-      // servicesBlock: {
-      //   title: "Transformieren Sie Ihre Geschäftsprozesse",
-      //   subtitle:
-      //     "Von Workflow-Automatisierung bis hin zu intelligenten Chatbots liefern wir KI-Lösungen, die manuelle Arbeit reduzieren, die Genauigkeit verbessern und messbare Geschäftsergebnisse erzielen.",
-      //   cta: "Alle Services ansehen",
-      // },
-
-      // services: {
-      //   workflowAutomation: {
-      //     title: "KI-Workflow-Automatisierung",
-      //     description: "Wiederkehrende Aufgaben und Prozesse optimieren",
-      //     detail:
-      //       "Wir automatisieren zeitaufwändige, regelbasierte und repetitive Workflows mit KI-Systemen, die sich an Ihr Business anpassen. Das reduziert Fehler, beschleunigt Abläufe und schafft Kapazität für wertvollere Aufgaben.",
-      //     bestFor:
-      //       "Ideal für: Operations, Finance, HR, Manufacturing, Logistik, Backoffice-Teams",
-      //   },
-      //   chatbots: {
-      //     title: "KI-Chatbots",
-      //     description: "Intelligente Automatisierung im Kundenservice",
-      //     detail:
-      //       "Unsere KI-Chatbots übernehmen Gespräche auf Websites, Apps und Messaging-Plattformen. Sie verstehen natürliche Sprache, lösen Standardfragen sofort und eskalieren komplexe Fälle.",
-      //     bestFor:
-      //       "Ideal für: Customer Support, Sales, Onboarding, interne IT-Helpdesks",
-      //   },
-      //   processOptimization: {
-      //     title: "Prozessoptimierung",
-      //     description: "Workflows analysieren und verbessern",
-      //     detail:
-      //       "Wir nutzen KI und Datenanalyse, um Ineffizienzen sichtbar zu machen, Engpässe zu finden und schnellere, smartere Abläufe zu empfehlen.",
-      //     bestFor:
-      //       "Ideal für: Prozessverbesserung, Operations-Leitung, Kostenreduktion",
-      //   },
-      //   predictiveAnalytics: {
-      //     title: "Predictive Analytics",
-      //     description: "Datenbasierte Insights für bessere Entscheidungen",
-      //     detail:
-      //       "Wir machen aus Ihren Daten verwertbare Prognosen, damit Sie Trends früher erkennen, Risiken reduzieren und proaktiv entscheiden.",
-      //     bestFor:
-      //       "Ideal für: Führungskräfte, Planung, Finance, Sales, Supply Chain",
-      //   },
-
-      //   // ✅ NEW (requested)
-      //   // digitalSystems: {
-      //   //   title: "Digitale Systeme & Business-Plattformen",
-      //   //   description:
-      //   //     "Moderne ERP-, E-Commerce- und individuelle Business-Apps entwickeln",
-      //   //   detail:
-      //   //     "Wir entwickeln die Systeme, die Ihr Geschäft tragen: ERP-Portale, E-Commerce-Backoffice, Kundendashboards und interne Tools. Mit sauberen Integrationen, automatisierten Workflows und sicherem Rollenmodell.",
-      //   //   bestFor:
-      //   //     "Ideal für: ERP-Modernisierung, operative Dashboards, Order & Inventory, interne Tools, Kundenportale",
-      //   // },
-      // },
-
-      // // ✅ NEW (requested)
-      // platformsBlock: {
-      //   title: "Plattformen, die wir bauen & modernisieren",
-      //   subtitle:
-      //     "Von ERP bis E-Commerce und internen Tools: sichere, skalierbare Plattformen mit sauberen Integrationen und automatisierungsfähigen Workflows.",
-      // },
-      // platforms: {
-      //   erp: {
-      //     title: "ERP-Systeme",
-      //     desc: "Modernisieren Sie Abläufe mit Rollenmodulen, Reporting, Freigaben und sauberem Datenfluss.",
-      //   },
-      //   customApps: {
-      //     title: "Individuelle Business-Apps",
-      //     desc: "Portale & interne Tools passend zu Ihrem Workflow—schnell, sicher und wartbar.",
-      //   },
-      //   ecommerce: {
-      //     title: "E-Commerce-Plattformen",
-      //     desc: "Bestellungen, Lager-Sync, Fulfillment-Automatisierung und Self-Service mit KI-Support.",
-      //   },
-      //   websites: {
-      //     title: "Websites & Kundenportale",
-      //     desc: "Konvertierende Websites + authentifizierte Portale—Chatbots, Knowledge Base und Admin-Content.",
-      //   },
-      // },
 
       teamBlock: {
         title: "Unser Team",
@@ -2086,7 +1828,7 @@ export const copy: Record<Lang, DeepRecord> = {
       },
       team: {
         molla: {
-          name: "Molla Sisay",
+          name: "Molla Sisay Jemere",
           role: "KI-Automation Strategist",
           quote:
             "Ich helfe Unternehmen, komplexe Prozesse zu vereinfachen und Automationssysteme zu entwerfen, die Effizienz steigern und Engpässe reduzieren.",
@@ -2107,16 +1849,12 @@ export const copy: Record<Lang, DeepRecord> = {
             tag3: "KI-Systeme",
           },
         },
+
         dereje: {
           name: "Dereje Masresha",
-          role: "Full-Stack & KI-Lösungsentwickler",
+          role: "AWS-Cloud-Enthusiast · Full-Stack- & KI-Lösungsentwickler",
           quote:
-            "Ich baue intelligente Automations-Tools und nahtlose User Experiences – unterstützt durch KI.",
-          tags: {
-            tag1: "Full-Stack",
-            tag2: "KI-Chatbots",
-            tag3: "Automationsplattformen",
-          },
+            "Entwickelt Full-Stack-Lösungen, die saubere Benutzeroberflächen, skalierbare cloudbasierte Systeme und praxisnahe KI-Automatisierung verbinden, um zuverlässige und benutzerorientierte Anwendungen bereitzustellen.",
         },
       },
       testimonialsBlock: {
@@ -2154,84 +1892,72 @@ export const copy: Record<Lang, DeepRecord> = {
 
     contact: {
       modal: {
-        title: "Nicht implementiert",
-        body: "Dies ist ein Template. Backend-Funktionalität ist nicht implementiert.",
+        title: "Nachricht gesendet",
+        body: "Vielen Dank! Wir haben Ihre Nachricht erhalten und melden uns innerhalb von 1–2 Werktagen.",
         close: "Schließen",
+        errorTitle: "Senden fehlgeschlagen",
+        errorBody:
+          "Leider ist beim Senden Ihrer Nachricht ein Fehler aufgetreten. Bitte schreiben Sie uns an contact@luxaiautomation.com.",
       },
       hero: {
         title: "Lassen Sie uns gemeinsam automatisieren",
         subtitle:
-          "Bereit, Ihr Business mit KI-Automatisierung zu transformieren? Beschreiben Sie Ihre Herausforderungen – wir erstellen eine maßgeschneiderte Lösung.",
+          "Bereit, Ihr Unternehmen mit KI-Automatisierung zu transformieren? Beschreiben Sie Ihre Herausforderungen und wir entwickeln eine maßgeschneiderte Lösung.",
       },
       form: {
         title: "Starten Sie mit KI-Automatisierung",
         fullName: "Vollständiger Name *",
         email: "E-Mail-Adresse *",
+        confirmEmail: "E-Mail-Adresse bestätigen *",
+        phone: "Telefonnummer *",
+        phoneHint:
+          "Wählen Sie Ihre Landesvorwahl und geben Sie eine erreichbare Nummer ein.",
         company: "Firmenname *",
         task: "Zu automatisierende Aufgabe *",
         sending: "Wird gesendet...",
         submit: "Kostenlose Beratung erhalten",
         placeholders: {
           name: "Max Mustermann",
-          email: "max@firma.com",
-          company: "Ihre Firma GmbH",
-          task: "Beschreiben Sie den Prozess, den Sie automatisieren möchten (z. B. Rechnungsverarbeitung, Support, Datenerfassung usw.)",
+          email: "max@firma.de",
+          confirmEmail: "max@firma.de",
+          phone: "+49 170 1234567",
+          company: "Ihr Unternehmen",
+          task: "Beschreiben Sie den Prozess, den Sie automatisieren möchten (z. B. Rechnungen, Kundensupport, Dateneingabe usw.)",
+        },
+        errors: {
+          emailMismatch: "Die E-Mail-Adressen stimmen nicht überein.",
+          phoneRequired: "Telefonnummer ist erforderlich.",
+          phoneInvalid:
+            "Bitte geben Sie eine gültige Telefonnummer inklusive Landesvorwahl ein.",
         },
       },
-      sidebar: { title: "Kontakt" },
+
+      sidebar: { title: "Kontakt aufnehmen" },
       whyTitle: "Warum wir?",
       why: {
-        i1: "Kostenloses Erstgespräch",
+        i1: "Kostenlose Erstberatung",
         i2: "Individuelle Lösungen",
         i3: "24/7 Support",
-        i4: "Nachweisliche Erfolge",
+        i4: "Nachweisbare Erfolge",
       },
       info: {
         email: {
-          icon: "ri-mail-line",
           title: "E-Mail",
-          content: "mfg@moolasisayjemere.com",
-          description: "Kontakt für Projektanfragen",
+          content: "contact@luxaiautomation.com",
+          description: "Projektanfragen & Beratung",
         },
         phone: {
-          icon: "ri-phone-line",
           title: "Telefon",
           content: "+352 691 833 894",
-          description: "Mo–Fr 9–18 Uhr (PST)",
+          description: "Mo–Fr · 8:00–18:00 Uhr (Luxemburg)",
         },
         visit: {
-          icon: "ri-map-pin-line",
-          title: "Besuchen",
-          content: "San Francisco, CA",
-          description: "Termin vor Ort vereinbaren",
-        },
-      },
-      testimonialsBlock: {
-        title: "Was unsere Kunden sagen",
-        subtitle: "Echte Ergebnisse durch KI-Automatisierung",
-      },
-      testimonials: {
-        t1: {
-          quote:
-            "KI-Automatisierung hat unsere Rechnungsverarbeitung um 70 % beschleunigt und Fehler vollständig eliminiert. Der ROI war bereits im ersten Monat sichtbar.",
-          author: "Sarah Johnson",
-          role: "Operations Manager",
-        },
-        t2: {
-          quote:
-            "Der Chatbot bearbeitet 90 % der Kundenanfragen automatisch. Das Team kann sich wieder auf strategische Themen konzentrieren.",
-          author: "Michael Chen",
-          role: "CEO",
-        },
-        t3: {
-          quote:
-            "Predictive Analytics hat uns Trends 3 Monate früher erkennen lassen. Das brachte einen Wettbewerbsvorteil und 25 % Umsatzplus.",
-          author: "Emily Rodriguez",
-          role: "VP Operations",
+          title: "Standort",
+          content: "Luxemburg (EU)",
+          description: "Remote-first · Termine nach Vereinbarung",
         },
       },
     },
-
     about: {
       hero: {
         title: "Über unsere Mission",
@@ -2261,30 +1987,32 @@ export const copy: Record<Lang, DeepRecord> = {
           "Vom kleinen Startup zur führenden KI-Automationsagentur – so sind wir gewachsen.",
       },
       timeline: {
-        "2020": {
-          title: "Gründung",
+        foundation: {
+          label: "Phase 1",
+          title: "Gegründet mit einer klaren Mission",
           description:
-            "Start mit der Vision, KI-Automatisierung zu demokratisieren",
+            "Wir haben Lux AI Consultancy & Automation gegründet, um Unternehmen bei der praktischen und messbaren Implementierung von KI zu unterstützen.",
         },
-        "2021": {
-          title: "Erster Großkunde",
+        research: {
+          label: "Phase 2",
+          title: "Forschung & Architektur",
           description:
-            "Rechnungsverarbeitung für ein Fortune-500-Unternehmen automatisiert",
+            "Wir haben uns auf die Analyse realer Automatisierungsbedarfe von Unternehmen und auf die Gestaltung skalierbarer Architekturen mit KI, Integrationen und Workflow-Automatisierung konzentriert.",
         },
-        "2022": {
-          title: "KI-Chatbot Launch",
-          description: "Start unserer KI-Chatbot-Plattform",
-        },
-        "2023": {
-          title: "Predictive Analytics",
+        building: {
+          label: "Jetzt",
+          title: "Aufbau der Kernsysteme",
           description:
-            "Einführung fortschrittlicher Predictive-Analytics-Funktionen",
+            "Wir entwickeln wiederverwendbare Automatisierungs-Frameworks, KI-Wissenssysteme und Administrationsfunktionen zur Unterstützung sicherer Deployments.",
         },
-        "2024": {
-          title: "Globale Expansion",
-          description: "Weltweite Ausweitung der Dienstleistungen",
+        next: {
+          label: "Als Nächstes",
+          title: "Early Access & Kundeneinführungen",
+          description:
+            "Wir bereiten Early-Access-Engagements vor und onboarden unsere ersten Kunden mit klar definiertem Umfang, Governance und messbaren ROI-Zielen.",
         },
       },
+
       cta: {
         title: "Bereit für den nächsten Schritt?",
         subtitle:
@@ -2572,22 +2300,74 @@ export const copy: Record<Lang, DeepRecord> = {
     },
 
     legal: {
+      cookies: {
+        title: "Cookie-Richtlinie",
+        meta: {
+          effectiveDate: "Gültig ab: 22. Dezember 2025",
+          company: "Lux AI Consultancy & Automation",
+          domain: "luxaiautomation.com",
+          downloadPdf: "PDF herunterladen",
+        },
+        sections: [
+          {
+            title: "1. Überblick",
+            body: "Diese Cookie-Richtlinie erläutert, wie Lux AI Consultancy & Automation Cookies und ähnliche Technologien auf dieser Website verwendet. Cookies werden in begrenzter und transparenter Weise eingesetzt, mit Fokus auf Benutzerfreundlichkeit und der Wahrung der Nutzerwahl.",
+          },
+          {
+            title: "2. Was sind Cookies?",
+            body: "Cookies sind kleine Textdateien, die beim Besuch einer Website auf Ihrem Gerät gespeichert werden. Sie helfen dabei, Einstellungen wie Sprache oder Darstellung zu speichern. Cookies gewähren keinen Zugriff auf Ihr Gerät, persönliche Dateien oder Kontakte.",
+          },
+          {
+            title: "3. Wie wir Cookies verwenden",
+            body: "Wir verwenden Cookies ausschließlich zur Speicherung von von Ihnen gewählten Präferenzen, wie etwa der ausgewählten Sprache und des Darstellungsmodus (hell oder dunkel). Die Website bleibt vollständig nutzbar, auch wenn Sie Präferenz-Cookies ablehnen. In diesem Fall gelten Ihre Einstellungen nur für die aktuelle Sitzung und werden nicht für zukünftige Besuche gespeichert.",
+          },
+          {
+            title: "4. Cookie-Kategorien",
+            bodyList: [
+              "Notwendige Cookies unterstützen den grundlegenden Betrieb der Website, einschließlich korrekter Darstellung, Navigation und Stabilität. Sie speichern standardmäßig keine persönlichen Präferenzen und werden nicht zum Tracking verwendet.",
+              "Präferenz-Cookies speichern die von Ihnen getroffenen Einstellungen, wie Sprache und Darstellung. Diese Cookies sind optional und werden nur gesetzt, wenn Sie ihnen ausdrücklich zustimmen.",
+            ],
+          },
+          {
+            title: "5. Technischer Betrieb und Stabilität",
+            body: "Eine begrenzte technische Verarbeitung kann erfolgen, um die Stabilität der Website, die Sicherheit sowie den Schutz vor Missbrauch zu gewährleisten. Dies ist Teil des normalen Infrastruktur-Betriebs und wird nicht für Werbung, Analysen oder Profiling verwendet.",
+          },
+          {
+            title: "6. Verwaltung Ihrer Präferenzen",
+            body: "Beim ersten Besuch der Website können Sie Präferenz-Cookies akzeptieren oder ablehnen. Bei Zustimmung können Ihre Einstellungen für zukünftige Besuche gespeichert werden. Bei Ablehnung funktioniert die Website weiterhin normal, jedoch werden keine Präferenzen gespeichert. Cookies können jederzeit über die Einstellungen Ihres Browsers verwaltet oder gelöscht werden.",
+          },
+          {
+            title: "7. Drittanbieter-Websites",
+            body: "Diese Website kann Links zu Websites Dritter enthalten, die unabhängig betrieben werden und eigene Cookies verwenden können. Lux AI Consultancy & Automation übernimmt keine Verantwortung für die Cookie-Praktiken Dritter.",
+          },
+          {
+            title: "8. Aktualisierungen dieser Richtlinie",
+            body: "Diese Cookie-Richtlinie kann gelegentlich aktualisiert werden, um Änderungen der Website-Funktionalität oder rechtlicher Anforderungen zu berücksichtigen. Alle Aktualisierungen werden auf dieser Seite mit einem neuen Gültigkeitsdatum veröffentlicht.",
+          },
+          {
+            title: "9. Kontakt",
+            body: "Wenn Sie Fragen zu dieser Cookie-Richtlinie haben, kontaktieren Sie uns bitte unter contact@luxaiautomation.com.",
+          },
+        ],
+        footer:
+          "Cookies helfen der Website, Ihre Einstellungen zu speichern und reibungslos zu funktionieren. Die Website bleibt auch ohne Cookies nutzbar.",
+      },
       privacy: {
         title: "Datenschutzerklärung",
         sections: {
           metaDate: "Gültig ab: 22. Dezember 2025",
-          metaCompany: "Lux AI Consultation & Automation",
+          metaCompany: "Lux AI Consultancy & Automation",
           metaDomain: "luxaiautomation.com",
           downloadPdf: "PDF herunterladen",
           contactLabel: "E-Mail:",
           emailCta: "E-Mail senden",
 
           s1t: "1. Einleitung",
-          s1b: "Lux AI Consultation & Automation mit Sitz in Luxemburg (EU) legt großen Wert auf den Schutz Ihrer Privatsphäre. Diese Datenschutzerklärung erläutert, wie wir Ihre Informationen bei der Nutzung unserer Website verarbeiten. Wir verpflichten uns, Ihre personenbezogenen Daten gemäß der Datenschutz-Grundverordnung (DSGVO) zu schützen.",
+          s1b: "Lux AI Consultancy & Automation mit Sitz in Luxemburg (EU) legt großen Wert auf den Schutz Ihrer Privatsphäre. Diese Datenschutzerklärung erläutert, wie wir Ihre Informationen bei der Nutzung unserer Website verarbeiten. Wir verpflichten uns, Ihre personenbezogenen Daten gemäß der Datenschutz-Grundverordnung (DSGVO) zu schützen.",
 
           s2t: "2. Erhobene Informationen",
           s2b1: "Wir erheben personenbezogene Daten nur, wenn Sie uns direkt kontaktieren. Wenn Sie unser Kontaktformular nutzen, können wir Ihren Namen, Ihre E-Mail-Adresse sowie den Inhalt Ihrer Nachricht erfassen. Diese Informationen werden ausschließlich zur Beantwortung Ihrer Anfrage verwendet und niemals verkauft oder an Dritte weitergegeben.",
-          s2b2: "Wir verwenden keine Analyse-, Tracking- oder Werbe-Cookies. Es werden ausschließlich technisch notwendige Cookies eingesetzt, um grundlegende Funktionen der Website sicherzustellen, wie z. B. die Speicherung Ihrer Designpräferenz (Hell- oder Dunkelmodus).",
+          s2b2: "Wir verwenden keine Analyse-, Tracking- oder Werbe-Cookies. Wir verwenden nur technisch notwendige Cookies für den Betrieb der Website sowie optionale Präferenz-Cookies (Design/Sprache) nur, wenn Sie diesen zustimmen.",
 
           s3t: "3. Verwendung Ihrer Informationen",
           s3b: "Alle von Ihnen bereitgestellten Informationen werden ausschließlich zur Bearbeitung Ihrer Anfrage verwendet. Wir nutzen Ihre Daten nicht zu Marketingzwecken und geben sie nicht an Dritte weiter.",
@@ -2599,7 +2379,7 @@ export const copy: Record<Lang, DeepRecord> = {
           s5b: "Wir setzen angemessene technische und organisatorische Maßnahmen ein, um Ihre personenbezogenen Daten vor unbefugtem Zugriff, Verlust oder Missbrauch zu schützen. Dennoch ist keine Methode der Datenübertragung oder -speicherung vollkommen sicher.",
 
           s6t: "6. Links zu Drittanbietern",
-          s6b: "Unsere Website kann Links zu Websites Dritter enthalten. LuxAI Automation übernimmt keine Verantwortung für die Datenschutzpraktiken oder Inhalte dieser externen Websites. Wir empfehlen, deren Datenschutzerklärungen zu lesen, bevor Sie personenbezogene Daten bereitstellen.",
+          s6b: "Unsere Website kann Links zu Websites Dritter enthalten. Lux AI Consultancy & Automation übernimmt keine Verantwortung für die Datenschutzpraktiken oder Inhalte dieser externen Websites. Wir empfehlen, deren Datenschutzerklärungen zu lesen, bevor Sie personenbezogene Daten bereitstellen.",
 
           s7t: "7. Änderungen dieser Erklärung",
           s7b: "Wir behalten uns vor, diese Datenschutzerklärung gelegentlich zu aktualisieren. Änderungen werden auf dieser Seite mit einem aktualisierten Gültigkeitsdatum veröffentlicht. Die weitere Nutzung der Website gilt als Zustimmung zur aktualisierten Erklärung.",
@@ -2643,7 +2423,7 @@ export const copy: Record<Lang, DeepRecord> = {
           s8b: "Diese Website kann Links zu Websites Dritter enthalten. Diese Links dienen lediglich der Benutzerfreundlichkeit. Lux AI Consultancy & Automation hat keinen Einfluss auf und übernimmt keine Verantwortung für Inhalte, Richtlinien oder Praktiken dieser Drittanbieter.",
 
           s9t: "9. Feedback und Einsendungen",
-          s9b: "Jegliches Feedback, Ideen oder Vorschläge, die Sie über diese Website an LuxAI Automation übermitteln, gelten als nicht vertraulich und dürfen von Lux AI Consultancy & Automation uneingeschränkt und ohne Vergütung verwendet werden.",
+          s9b: "Jegliches Feedback, Ideen oder Vorschläge, die Sie über diese Website an Lux AI Consultancy & Automation übermitteln, gelten als nicht vertraulich und dürfen von Lux AI Consultancy & Automation uneingeschränkt und ohne Vergütung verwendet werden.",
 
           s10t: "10. Änderungen dieser Bedingungen",
           s10b: "Lux AI Consultancy & Automation behält sich das Recht vor, diese Allgemeinen Geschäftsbedingungen jederzeit zu ändern oder zu aktualisieren. Änderungen treten mit der Veröffentlichung in Kraft. Die fortgesetzte Nutzung der Website gilt als Zustimmung zu den geänderten Bedingungen.",
@@ -2662,7 +2442,7 @@ export const copy: Record<Lang, DeepRecord> = {
 
   lb: {
     common: {
-      brand: "AI Automation",
+      brand: "Lux AI Consultancy & Automation",
       nav: {
         home: "Start",
         services: "Servicer",
@@ -2688,17 +2468,17 @@ export const copy: Record<Lang, DeepRecord> = {
         quickLinks: "Schnell Links",
         aboutUs: "Iwwer eis",
         services: "Servicer",
-        useCases: "Use Cases",
         howItWorks: "Wéi et funktionéiert",
         contactInfo: "Kontakt",
-        email: "mfg@moolasisayjemere.com",
-        emailRaw: "mfg@moolasisayjemere.com",
+        email: "contact@luxaiautomation.com",
+        emailRaw: "contact@luxaiautomation.com",
         phone: "+352 691 833 894",
         phoneRaw: "+352691833894",
-        location: "Belvaux, Luxumbourg",
+        location: "Belvaux, Lëtzebuerg",
         socialTitle: "Verbannt Iech mat eis",
         rights: "All Rechter virbehalen.",
-        privacy: "Dateschutz",
+        cookies: "Cookie-Richtlinnen",
+        privacy: "Privatsphär",
         terms: "Notzungsbedingungen",
       },
     },
@@ -2825,117 +2605,6 @@ export const copy: Record<Lang, DeepRecord> = {
         },
       },
 
-      // trusted: {
-      //   title:
-      //     "Vertraut vu Teams, déi hir Operatiounen mat KI-Automatiséierung transforméieren",
-      //   subtitle:
-      //     "Mir entwéckelen a bauen KI-Automatiséierung — vu Chatbots bis ERP-Systemer an individuell Uwendungen — sou datt Är Operatiounen méi séier, méi propper an méi sécher lafen.",
-      //   outcomes:
-      //     "Typesch Resultater: manner manuell Aarbecht, méi séiere Support, méi propper Dateflëss, Admin-kontrolléiert Operatiounen.",
-      // },
-      // capabilities: {
-      //   publicChatbots: {
-      //     name: "Website-Chatbots (ëffentlech)",
-      //     desc: "Lead-Erfaassung + FAQen 24/7",
-      //   },
-      //   protectedChatbots: {
-      //     name: "Geschützte Chatbots",
-      //     desc: "Authentifizéierte Benotzer-Zougang",
-      //   },
-      //   adminKb: {
-      //     name: "Admin-KB-Management",
-      //     desc: "Konsequent Updates & Kontroll",
-      //   },
-      //   erpApps: {
-      //     name: "ERP & Business-Web-Apps",
-      //     desc: "Backoffice + Reporting",
-      //   },
-      //   ecommerceInventory: {
-      //     name: "E-Commerce & Lager",
-      //     desc: "Bestellungen + Bestandsmanagement",
-      //   },
-      //   integrationAutomation: {
-      //     name: "Integratioun & Automatiséierung",
-      //     desc: "APIs, Webhooks, n8n/Make/Zapier",
-      //   },
-      // },
-
-      // servicesBlock: {
-      //   title: "Transforméiert Är Business-Operatiounen",
-      //   subtitle:
-      //     "Vun der Automatiséierung vu Workflows bis zu intelligente Chatbots liwwere mir KI-Léisungen, déi manuell Aarbecht reduzéieren, d’Genauegkeet verbesseren an moossbar Geschäftserfolleger bréngen.",
-      //   cta: "All Servicer kucken",
-      // },
-
-      // services: {
-      //   workflowAutomation: {
-      //     title: "KI Workflow-Automatiséierung",
-      //     description: "Widderhuelend Aufgaben a Prozesser vereinfachen",
-      //     detail:
-      //       "Mir automatiséieren Zäit-intensiv, regelbaséiert a widderhuelend Workflows mat KI-Systemer, déi sech un Är Entreprise upassen. Dat reduzéiert Feeler, beschleunegt d’Ausféierung a fräimacht Zäit fir méi wäertvoll Aarbecht.",
-      //     bestFor:
-      //       "Ideal fir: Operatiounen, Finance, HR, Industrie, Logistik, Backoffice-Teams",
-      //   },
-      //   chatbots: {
-      //     title: "KI-Chatbots",
-      //     description: "Intelligent Automatiséierung am Clientsservice",
-      //     detail:
-      //       "Eis KI-Chatbots behandelen Gespréicher op Websites, Apps a Messagerie. Si verstoen natierlech Sprooch, léisen Standardfroen direkt a eskaléieren komplex Fäll.",
-      //     bestFor: "Ideal fir: Support, Sales, Onboarding, intern IT-Helpdesks",
-      //   },
-      //   processOptimization: {
-      //     title: "Prozess-Optimiséierung",
-      //     description: "Workflows analyséieren an verbesseren",
-      //     detail:
-      //       "Mir benotzen KI an Date-Analys fir Ineffizienzen ze fannen, Engpäss z’identifizéieren an méi séier, méi intelligent Prozesser ze recommandéieren.",
-      //     bestFor:
-      //       "Ideal fir: Prozess-Verbesserung, Operatiouns-Leedung, Käschtereduktioun",
-      //   },
-      //   predictiveAnalytics: {
-      //     title: "Predictiv Analysen",
-      //     description: "Date-Insights fir besser Entscheedungen",
-      //     detail:
-      //       "Mir maachen aus Ären Donnéeën Prognosen, fir Trends fréi ze erkennen, Risiken ze reduzéieren an proaktiv Entscheedungen ze huelen.",
-      //     bestFor:
-      //       "Ideal fir: Executives, Planung, Finance, Sales, Supply Chain",
-      //   },
-
-      //   // ✅ NEW (requested)
-      //   // digitalSystems: {
-      //   //   title: "Digital Systemer & Business-Plattformen",
-      //   //   description:
-      //   //     "Moderne ERP, E-Commerce an personaliséiert Business-Apps bauen",
-      //   //   detail:
-      //   //     "Mir bauen d’Systemer, déi Är Entreprise droen: ERP-Portalen, E-Commerce Backoffice, Client-Dashboards an intern Tools. Mat propper Integratiounen, automatiséierte Workflows a séchere Rollen (role-based access).",
-      //   //   bestFor:
-      //   //     "Ideal fir: ERP-Moderniséierung, operativ Dashboards, Bestellung & Lager, intern Tools, Client-Portalen",
-      //   // },
-      // },
-
-      // // ✅ NEW (requested)
-      // platformsBlock: {
-      //   title: "Plattformen déi mir bauen & moderniséieren",
-      //   subtitle:
-      //     "Vun ERP bis E-Commerce an intern Tools: sécher, skaléierbar Plattformen mat propper Integratiounen an automatiséierungsbereete Workflows.",
-      // },
-      // platforms: {
-      //   erp: {
-      //     title: "ERP Systemer",
-      //     desc: "Moderniséiert Operatiounen mat Rollenmoduler, Reporting, Approvals an engem propperen Datefloss.",
-      //   },
-      //   customApps: {
-      //     title: "Custom Business Apps",
-      //     desc: "Portalen an intern Tools no Ärem Workflow—séier, sécher a gutt ze ënnerhalen.",
-      //   },
-      //   ecommerce: {
-      //     title: "E-Commerce Plattformen",
-      //     desc: "Bestellungen, Lager-Sync, Fulfillment-Automatiséierung a Self-Service mat KI-Support.",
-      //   },
-      //   websites: {
-      //     title: "Websites & Client-Portalen",
-      //     desc: "Staark Websites + authentifizéiert Portalen—Chatbots, Knowledge Base an Admin-Content.",
-      //   },
-      // },
 
       teamBlock: {
         title: "Eist Team",
@@ -2944,7 +2613,7 @@ export const copy: Record<Lang, DeepRecord> = {
       },
       team: {
         molla: {
-          name: "Molla Sisay",
+          name: "Molla Sisay Jemere",
           role: "KI-Automatiséierungs-Strateg",
           quote:
             "Ech hëllefen Entreprisen, komplex Prozesser ze vereinfachen an Automatiséierungs-Systemer ze designen, déi d’Effizienz erhéijen an Engpäss reduzéieren.",
@@ -2965,16 +2634,12 @@ export const copy: Record<Lang, DeepRecord> = {
             tag3: "KI-Systemer",
           },
         },
+
         dereje: {
           name: "Dereje Masresha",
-          role: "Full-Stack & KI-Léisungs-Entwéckler",
+          role: "AWS-Cloud-Enthusiast · Full-Stack- & KI-Léisungsentwéckler",
           quote:
-            "Ech entwéckelen intelligent Automatiséierungs-Tools a nahtlos User Experiences – ugedriwwe vun KI.",
-          tags: {
-            tag1: "Full-Stack",
-            tag2: "KI-Chatbots",
-            tag3: "Automatiséierungs-Plattformen",
-          },
+            "Entwéckelt Full-Stack-Léisungen, déi propper Benotzeroberflächen, skaléierbar cloud-baséiert Systemer an praktesch KI-Automatiséierung kombinéieren, fir zouverlässeg a benotzerorientéiert Applikatiounen ze liwweren.",
         },
       },
       testimonialsBlock: {
@@ -3012,84 +2677,71 @@ export const copy: Record<Lang, DeepRecord> = {
 
     contact: {
       modal: {
-        title: "Net ëmgesat",
-        body: "Dëst ass eng Template. Backend-Funktioun ass net ëmgesat.",
+        title: "Message geschéckt",
+        body: "Merci! Mir hunn Är Noriicht kritt a mellen eis bannent 1–2 Aarbechtsdeeg.",
         close: "Zoumaachen",
+        errorTitle: "Senden net gelongen",
+        errorBody:
+          "Leider ass e Feeler beim Verschécken opgetrueden. Schreift eis w.e.g. op contact@luxaiautomation.com.",
       },
       hero: {
         title: "Loosst eis zesumme automatiséieren",
         subtitle:
-          "Bereet Är Entreprise mat KI-Automatiséierung ze transforméieren? Beschreift Är Erausfuerderungen, mir bauen eng passend Léisung.",
+          "Bereet Äert Betrib mat KI-Automatiséierung ze verbesseren? Beschreift Är Erausfuerderungen an mir schafen eng personaliséiert Léisung.",
       },
       form: {
         title: "Start mat KI-Automatiséierung",
         fullName: "Vollen Numm *",
         email: "E-Mail-Adress *",
-        company: "Entreprise *",
+        confirmEmail: "E-Mail-Adress bestätegen *",
+        phone: "Telefonsnummer *",
+        phoneHint: "Wielt Är Landesvirwahl a gitt eng erreechbar Nummer an.",
+        company: "Numm vun der Firma *",
         task: "Aufgab fir ze automatiséieren *",
-        sending: "Schécken...",
-        submit: "Gratis Consultatioun kréien",
+        sending: "Gëtt geschéckt...",
+        submit: "Gratis Berodung ufroen",
         placeholders: {
-          name: "Max Mustermann",
-          email: "max@firma.com",
-          company: "Är Entreprise",
-          task: "Beschreift de Prozess, deen Dir automatiséiere wëllt (z. B. Rechnungen, Support, Datenerfaassung, etc.)",
+          name: "Jean Muller",
+          email: "jean@firma.lu",
+          confirmEmail: "jean@firma.lu",
+          phone: "+352 691 833 894",
+          company: "Är Firma",
+          task: "Beschreift de Prozess deen Dir automatiséiere wëllt (z. B. Rechnungen, Clientsservice, Dateerfaassung, etc.)",
+        },
+        errors: {
+          emailMismatch: "D’E-Mail-Adressen stëmmen net iwwereneen.",
+          phoneRequired: "Eng Telefonsnummer ass erfuerderlech.",
+          phoneInvalid:
+            "Gitt w.e.g. eng valabel Telefonsnummer mat Landesvirwahl an.",
         },
       },
+
       sidebar: { title: "Kontakt" },
-      whyTitle: "Firwat mir?",
+      whyTitle: "Firwat eis wielen?",
       why: {
-        i1: "Gratis éischt Consultatioun",
-        i2: "Moossgeschneidert Léisungen",
+        i1: "Gratis éischt Berodung",
+        i2: "Individuell Léisungen",
         i3: "24/7 Support",
-        i4: "Bewisen Erfolleger",
+        i4: "Bewisen Erfarung",
       },
       info: {
         email: {
-          icon: "ri-mail-line",
           title: "E-Mail",
-          content: "hello@aiautomation.com",
-          description: "Fir Projet-Ufroen",
+          content: "contact@luxaiautomation.com",
+          description: "Projetufroen & Berodung",
         },
         phone: {
-          icon: "ri-phone-line",
           title: "Telefon",
           content: "+352 691 833 894",
-          description: "Mé–Fr 9–18 Auer (PST)",
+          description: "Mé–Fr · 8:00–18:00 (Lëtzebuerger Zäit)",
         },
         visit: {
-          icon: "ri-map-pin-line",
-          title: "Besich",
-          content: "San Francisco, CA",
-          description: "Rendez-vous ausmaachen",
-        },
-      },
-      testimonialsBlock: {
-        title: "Wat eis Clienten soen",
-        subtitle: "Reell Resultater duerch KI-Automatiséierung",
-      },
-      testimonials: {
-        t1: {
-          quote:
-            "KI-Automatiséierung huet eis Rechnungsveraarbechtung ëm 70% beschleunegt an Feeler eliminéiert. De ROI war am éischte Mount sichtbar.",
-          author: "Sarah Johnson",
-          role: "Operations Manager",
-        },
-        t2: {
-          quote:
-            "De Chatbot behandelt 90% vun de Clientefroen automatesch. Eist Team kann sech op strategesch Themen konzentréieren.",
-          author: "Michael Chen",
-          role: "CEO",
-        },
-        t3: {
-          quote:
-            "Predictiv Analysen hunn eis Trends 3 Méint méi fréi gewisen. Dat huet eise Revenue ëm 25% erhéicht.",
-          author: "Emily Rodriguez",
-          role: "VP Operations",
+          title: "Baséiert zu",
+          content: "Lëtzebuerg (EU)",
+          description: "Remote-first · Rendez-vous op Ufro",
         },
       },
     },
-
     about: {
       hero: {
         title: "Iwwer eis Missioun",
@@ -3119,30 +2771,32 @@ export const copy: Record<Lang, DeepRecord> = {
           "Vun engem klenge Startup zu enger féierender KI-Automatiséierungs-Agentur — esou hu mir eis entwéckelt.",
       },
       timeline: {
-        "2020": {
-          title: "Grënnung",
+        foundation: {
+          label: "Phas 1",
+          title: "Gegrënnt mat enger kloer definéierter Missioun",
           description:
-            "Start mat der Visioun KI-Automatiséierung ze demokratiséieren",
+            "Mir hunn Lux AI Consultancy & Automation gegrënnt, fir Entreprisen ze hëllefen, KI op eng praktesch a moossbar Aart ëmzesetzen.",
         },
-        "2021": {
-          title: "Éischte grousse Client",
+        research: {
+          label: "Phas 2",
+          title: "Fuerschung & Architektur",
           description:
-            "Rechnungsveraarbechtung fir eng Fortune-500-Firma automatiséiert",
+            "Mir hu eis op d’Analyse vu reelle Bedierfnesser an der Geschäftsautomatiséierung an op d’Konzipéierung vu skaléierbaren Architekturen mat KI, Integratiounen a Workflow-Automatiséierung konzentréiert.",
         },
-        "2022": {
-          title: "KI-Chatbot Launch",
-          description: "Start vun eiser KI-Chatbot-Plattform",
-        },
-        "2023": {
-          title: "Predictiv Analysen",
+        building: {
+          label: "Elo",
+          title: "Opbau vun de Kärsystemer",
           description:
-            "Fortgeschratt Predictive-Analytics-Funktiounen agefouert",
+            "Mir entwéckelen widderverwendbar Automatiséierungs-Frameworks, KI-Wëssenssystemer an Administratiounskontrollen, fir sécher Deployementer z’ënnerstëtzen.",
         },
-        "2024": {
-          title: "Global Expansioun",
-          description: "Servicer weltwäit ausgebaut",
+        next: {
+          label: "Als Nächst",
+          title: "Early Access & Client-Rollouts",
+          description:
+            "Mir bereede Early-Access-Projeten vir an onboarde eis éischt Clienten mat engem kloer definéierte Scope, Gouvernance a moossbare ROI-Ziler.",
         },
       },
+
       cta: {
         title: "Bereet fir Är Entreprise ze transforméieren?",
         subtitle:
@@ -3425,22 +3079,74 @@ export const copy: Record<Lang, DeepRecord> = {
     },
 
     legal: {
+      cookies: {
+        title: "Cookie-Politik",
+        meta: {
+          effectiveDate: "Gëlteg ab: 22. Dezember 2025",
+          company: "Lux AI Consultancy & Automation",
+          domain: "luxaiautomation.com",
+          downloadPdf: "PDF eroflueden",
+        },
+        sections: [
+          {
+            title: "1. Iwwersiicht",
+            body: "Dës Cookie-Politik erkläert, wéi Lux AI Consultancy & Automation Cookies an ähnlech Technologien op dëser Websäit benotzt. Cookies ginn op eng limitéiert a transparent Aart benotzt, mat Fokus op Benotzerfrëndlechkeet an de Respekt vum Choix vum Benotzer.",
+          },
+          {
+            title: "2. Wat sinn Cookies?",
+            body: "Cookies si kleng Textdateien, déi op Ärem Apparat gespäichert ginn, wann Dir eng Websäit besicht. Si hëllefen, Astellungen wéi Sprooch oder Erscheinungsbild ze späicheren. Cookies ginn Iech kee Zougang zu Ärem Apparat, perséinleche Fichieren oder Kontakter.",
+          },
+          {
+            title: "3. Wéi mir Cookies benotzen",
+            body: "Mir benotze Cookies nëmme fir Preferenzen ze späicheren, déi Dir selwer auswielt, wéi Är Sprooch an de visuellen Design (hell oder donkel Modus). D’Websäit bleift voll benotzbar, och wann Dir Preferenz-Cookies refuséiert. An deem Fall gëllen Är Astellungen nëmme fir déi aktuell Sessioun a ginn net fir zukünfteg Visitte gespäichert.",
+          },
+          {
+            title: "4. Cookie-Kategorien",
+            bodyList: [
+              "Néideg Cookies ënnerstëtzen de Basis-Betrib vun der Websäit, dorënner korrekt Affichage, Navigatioun a Stabilitéit. Si späicheren standardméisseg keng perséinlech Preferenzen a ginn net fir Tracking benotzt.",
+              "Preferenz-Cookies späicheren Är gewielte Astellungen, wéi Sprooch an Erscheinung. Dës Cookies si fakultativ a ginn nëmme gesat, wann Dir se ausdrécklech akzeptéiert.",
+            ],
+          },
+          {
+            title: "5. Technesche Betrib a Stabilitéit",
+            body: "Eng limitéiert technesch Veraarbechtung kann néideg sinn, fir d'Stabilitéit vun der Websäit, d'Sécherheet an de Schutz géint Mëssbrauch ze garantéieren. Dëst ass Deel vum normale Infrastruktur-Betrib a gëtt net fir Reklammen, Analysen oder Profiling benotzt.",
+          },
+          {
+            title: "6. Är Preferenzen verwalten",
+            body: "Beim éischte Besuch vun der Websäit kënnt Dir Preferenz-Cookies akzeptéieren oder refuséieren. Bei Akzeptanz kënnen Är Astellungen fir zukünfteg Visitte gespäichert ginn. Bei Refus funktionéiert d’Websäit normal, mee Preferenze ginn net gespäichert. Dir kënnt Cookies zu all Moment iwwer d’Browser-Astellunge verwalten oder läschen.",
+          },
+          {
+            title: "7. Drëtt-Partei Websäiten",
+            body: "Dës Websäit kann Linken op Drëtt-Partei Websäiten enthalen, déi onofhängeg bedriwwe ginn an hir eege Cookies benotze kënnen. Lux AI Consultancy & Automation ass net responsabel fir d’Cookie-Praktike vun Drëtten.",
+          },
+          {
+            title: "8. Aktualiséierungen vun dëser Politik",
+            body: "Dës Cookie-Politik ka vun Zäit zu Zäit aktualiséiert ginn, fir Ännerungen an der Websäit-Funktionalitéit oder gesetzlech Ufuerderungen ze reflektéieren. All Aktualiséierung gëtt op dëser Säit mat engem neie gëltege Datum publizéiert.",
+          },
+          {
+            title: "9. Kontakt",
+            body: "Wann Dir Froen zu dëser Cookie-Politik hutt, kontaktéiert eis w.e.g. ënner contact@luxaiautomation.com.",
+          },
+        ],
+        footer:
+          "Cookies hëllefen der Websäit, Är Preferenzen ze späicheren an flësseg ze funktionéieren. D’Websäit bleift och ouni Cookies benotzbar.",
+      },
       privacy: {
         title: "Dateschutzpolitik",
         sections: {
           metaDate: "A Kraaft zënter: 22. Dezember 2025",
-          metaCompany: "Lux AI Consultation & Automation",
+          metaCompany: "Lux AI Consultancy & Automation",
           metaDomain: "luxaiautomation.com",
           downloadPdf: "PDF eroflueden",
           contactLabel: "E-Mail:",
           emailCta: "E-Mail schécken",
 
           s1t: "1. Aféierung",
-          s1b: "Lux AI Consultation & Automation, mat Sëtz zu Lëtzebuerg (EU), respektéiert Är Privatsphär. Dës Dateschutzpolitik erkläert, wéi mir Är Informatioune behandelen, wann Dir eis Websäit benotzt. Mir engagéieren eis, Är perséinlech Donnéeën am Aklang mat der General Dateschutzveruerdnung (GDPR) ze schützen.",
+          s1b: "Lux AI Consultancy & Automation, mat Sëtz zu Lëtzebuerg (EU), respektéiert Är perséinlech Donnéeën. Dës Dateschutzpolitik erkläert, wéi mir Är Informatioune behandelen, wann Dir eis Websäit benotzt. Mir engagéieren eis, Är perséinlech Donnéeën am Aklang mat der General Dateschutzveruerdnung (GDPR) ze schützen.",
 
           s2t: "2. Informatiounen déi mir sammelen",
-          s2b1: "Mir sammelen nëmme perséinlech Donnéeën, wann Dir eis direkt kontaktéiert. Wann Dir eise Kontaktformular benotzt, kënne mir Ären Numm, Är E-Mail-Adress an den Inhalt vun Ärer Noriicht sammelen. Dës Informatioune ginn ausschliisslech benotzt, fir op Är Ufro ze äntweren, a ginn ni verkaaft oder mat Drëttpersounen gedeelt.",
-          s2b2: "Mir benotze keng Analyse-, Tracking- oder Reklammecookies. Nëmme wesentlech Cookies ginn agesat, fir déi grondleeënd Fonctionalitéit vun der Websäit ze garantéieren, wéi z. B. d’Späichere vun Ärer Designpräferenz (hellen oder donkele Modus).",
+          s2b1: "Mir sammelen nëmme perséinlech Donnéeën, wann Dir eis direkt kontaktéiert. Wann Dir eise Kontaktformular benotzt, kënne mir Ären Numm, Är E-Mail-Adress an den Inhalt vun Ärer Noriicht sammelen. Dës Informatioune ginn ausschliisslech benotzt, fir op Är Ufro ze äntweren, a ginn ni verkaaft oder mat Drëttpersoune gedeelt.",
+          s2b2: "Mir benotzen keng Analyse-, Tracking- oder Reklamme-Cookies. Mir benotzen nëmme strikt néideg Cookies fir de Fonctionnement vum Site an optional Preferenz-Cookies (Thema/Sprooch) nëmme wann Dir se akzeptéiert.",
 
           s3t: "3. Wéi mir Är Informatioune benotzen",
           s3b: "All Informatiounen, déi Dir eis gitt, ginn ausschliisslech benotzt, fir op Är Ufro oder Demande ze reagéieren. Mir benotzen Är Donnéeën net fir Marketingzwecker a ginn se net un Drëttpersoune weider.",
@@ -3452,16 +3158,18 @@ export const copy: Record<Lang, DeepRecord> = {
           s5b: "Mir setzen raisonnabel technesch an organisatoresch Moossnamen an, fir Är perséinlech Donnéeën géint onerlaabten Zougang, Verloscht oder Mëssbrauch ze schützen. Trotzdem ass keng Method vun der Dateiwwerdroung oder -späicherung komplett sécher.",
 
           s6t: "6. Linken op Drëttsäiten",
-          s6b: "Eis Websäit kann Linken op extern Websäite vu Drëttpersoune enthalen. LuxAI Automation ass net responsabel fir d’Dateschutzpraktiken oder den Inhalt vun dëse Säiten. Mir recommandéieren, hir Dateschutzpolitiken ze liesen, éier Dir perséinlech Donnéeën ugitt.",
+          s6b: "Eis Websäit kann Linken op extern Websäite vu Drëttpersoune enthalen. Lux AI Consultancy & Automation ass net responsabel fir d’Dateschutzpraktiken oder den Inhalt vun dëse Säiten. Mir recommandéieren, hir Dateschutzpolitiken ze liesen, éier Dir perséinlech Donnéeën ugitt.",
 
           s7t: "7. Ännerungen un dëser Politik",
           s7b: "Mir kënnen dës Dateschutzpolitik vun Zäit zu Zäit aktualiséieren. All Ännerunge ginn op dëser Säit mat engem neien A-Kraaft-Datum publizéiert. D’Weiderbenotzung vun der Websäit gëllt als Akzeptanz vun der aktualiséierter Politik.",
 
           s8t: "8. Är Rechter & Kontaktinformatiounen",
           s8b: "No der GDPR hutt Dir d’Recht op Zougang, Korrektur oder Läschung vun Äre perséinlechen Donnéeën. Fir Froen oder Ufroen am Zesummenhang mam Dateschutz, kontaktéiert eis w.e.g. ënner contact@luxaiautomation.com.",
+
           end: "Mat der Benotzung vun dëser Websäit bestätegt Dir, datt Dir dës Dateschutzpolitik gelies hutt an akzeptéiert.",
         },
       },
+
       terms: {
         title: "Allgemeng Geschäftsbedéngungen",
         sections: {
@@ -3496,7 +3204,7 @@ export const copy: Record<Lang, DeepRecord> = {
           s8b: "Dës Websäit kann Linken op Websäite vun Drëttpersounen enthalen. Dës Linke ginn nëmme fir d’Bequemlechkeet zur Verfügung gestallt. Lux AI Consultancy & Automation huet keng Kontroll iwwer an ass net responsabel fir den Inhalt, d’Politiken oder d’Praktike vun dëse Säiten.",
 
           s9t: "9. Feedback an Andreiwungen",
-          s9b: "All Feedback, Iddien oder Virschléi, déi Dir iwwer dës Websäit un LuxAI Automation schéckt, gëllen als net vertraulech a kënnen ouni Restriktioun oder Kompensatioun vu Lux AI Consultancy & Automation benotzt ginn.",
+          s9b: "All Feedback, Iddien oder Virschléi, déi Dir iwwer dës Websäit un Lux AI Consultancy & Automation schéckt, gëllen als net vertraulech a kënnen ouni Restriktioun oder Kompensatioun vu Lux AI Consultancy & Automation benotzt ginn.",
 
           s10t: "10. Ännerunge vun dëse Bedéngungen",
           s10b: "Lux AI Consultancy & Automation behält sech d’Recht vir, dës Allgemeng Geschäftsbedéngungen zu all Moment z’änneren oder z’aktualiséieren. Ännerunge trieden direkt nom Publizéieren a Kraaft. D’Weiderbenotzung vun der Websäit gëllt als Akzeptanz vun de geännerten Bedéngungen.",

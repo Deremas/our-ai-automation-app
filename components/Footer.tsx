@@ -163,29 +163,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        {/* <div className="border-t border-blue-600 mt-10 pt-6 flex flex-col md:flex-row items-center gap-[25rem]">
-          <p className="text-blue-200 text-sm text-center md:text-left">
-            © {currentYear} {t(lang, "common.footer.brandName")}.{" "}
-            {t(lang, "common.footer.rights")}
-          </p>
-
-          <div className="flex space-x-6">
-            <Link
-              href="/privacy-policy"
-              className="text-blue-200 dark:text-gray-300 hover:text-accent-500 dark:hover:text-accent-400 transition-colors duration-200 text-sm"
-            >
-              {t(lang, "common.footer.privacy")}
-            </Link>
-
-            <Link
-              href="/terms"
-              className="text-blue-200 dark:text-gray-300 hover:text-accent-500 dark:hover:text-accent-400 transition-colors duration-200 text-sm"
-            >
-              {t(lang, "common.footer.terms")}
-            </Link>
-          </div>
-        </div> */}
         <div className="border-t border-blue-600 mt-10 pt-6">
           <div
             className="
@@ -200,19 +177,26 @@ export default function Footer() {
               {t(lang, "common.footer.rights")}
             </p>
 
-            <div className="flex flex-wrap justify-center sm:justify-end gap-x-6 gap-y-2">
+            <div className="flex flex-wrap justify-center sm:justify-end gap-x-2 gap-y-2">
               <Link
                 href="/privacy-policy"
                 className="text-blue-200 hover:text-accent-500 transition-colors duration-200 text-sm"
               >
                 {t(lang, "common.footer.privacy")}
               </Link>
-
+              <span>|</span>
               <Link
                 href="/terms"
                 className="text-blue-200 hover:text-accent-500 transition-colors duration-200 text-sm"
               >
                 {t(lang, "common.footer.terms")}
+              </Link>
+              <span >|</span>
+              <Link
+                href="/cookies"
+                className="text-blue-200 hover:text-accent-500 transition-colors duration-200 text-sm"
+              >
+                {t(lang, "common.footer.cookies")}
               </Link>
             </div>
           </div>
