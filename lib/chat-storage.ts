@@ -9,7 +9,7 @@ export type SafeMessage = {
   metadata?: { language?: ChatLanguage };
 };
 
-const STORAGE_KEY = "kindflow_chat_history_v1";
+const STORAGE_KEY = "luxai_chat_history_v1";
 
 function isSafeMessage(x: any): x is SafeMessage {
   return (

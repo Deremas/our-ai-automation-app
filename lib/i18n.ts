@@ -7,9 +7,9 @@ export const APP_LANGUAGES: { code: AppLanguage; label: string }[] = [
   { code: "lb", label: "Lëtzebuergesch" },
 ];
 
-export const DEFAULT_LANG: AppLanguage = "en";
+export const DEFAULT_LANG: AppLanguage = "lb";
 
-export const LANG_STORAGE_KEY = "kindflow_lang_v1";
+export const LANG_STORAGE_KEY = "luxai_lang_v1";
 
 // Generic localized types
 export type LocalizedString = Record<AppLanguage, string>;
